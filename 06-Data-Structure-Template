@@ -1,0 +1,111 @@
+// This program demonstrates a template-based data structure library
+// that includes common data structures like linked lists, stacks, and queues.
+
+#include <iostream>
+#include <stdexcept>
+
+// Define a template class for a Node in a linked list
+template <typename T>
+struct Node {
+    T data;
+    Node<T>* next;
+
+    // Constructor to initialize data and next pointer
+    Node(T value) : data(value), next(nullptr) {}
+};
+
+// Define a template class for a LinkedList
+template <typename T>
+class LinkedList {
+private:
+    Node<T>* head;  // Pointer to the head of the list
+
+public:
+    // Constructor to initialize an empty list
+    LinkedList() : head(nullptr) {}
+
+    // Destructor to free allocated memory
+    ~LinkedList() {
+        Node<T>* current = head;
+        while (current != nullptr) {
+            Node<T>* next = current->next;
+            delete current;
+            current = next;
+        }
+    }
+
+    // Method to add a new element to the front of the list
+    void push(T value) {
+        Node<T>* newNode = new Node<T>(value);
+        newNode->next = head;
+        head = newNode;
+    }
+
+    // Method to remove the element from the front of the list
+    T pop() {
+        if (head == nullptr) {
+            throw std::out_of_range("List is empty");
+        }
+        T value = head->data;
+        Node<T>* temp = head;
+        head = head->next;
+        delete temp;
+        return value;
+    }
+
+    // Method to check if the list is empty
+    bool isEmpty() const {
+        return head == nullptr;
+    }
+
+    // Method to print all elements in the list
+    void print() const {
+        Node<T>* current = head;
+        while (current != nullptr) {
+            std::cout << current->data << " ";
+            current = current->next;
+        }
+        std::cout << std::endl;
+    }
+};
+
+int main() {
+    // Instantiate a LinkedList of integers
+    LinkedList<int> intList;
+
+    // Add some elements to the list
+    intList.push(10);
+    intList.push(20);
+    intList.push(30);
+
+    // Print the elements in the list
+    std::cout << "List elements: ";
+    intList.print();
+
+    // Remove an element from the list
+    int poppedValue = intList.pop();
+    std::cout << "Popped value: " << poppedValue << std::endl;
+
+    // Print the remaining elements in the list
+    std::cout << "List elements after pop: ";
+    intList.print();
+
+    return 0;
+}
+
+
+"""
+EXPLANATION OF THE CODE
+
+The code starts by defining a template structure Node<T> which represents a node in a linked list. Each node holds data of type T and a pointer to the next node.
+A template class LinkedList<T> is defined to manage a linked list. It includes methods to push elements onto the list (push), pop elements off the list (pop), check if the list is empty (isEmpty), and print the elements in the list (print).
+The main function demonstrates the usage of the LinkedList class with integer data type (int). It creates a linked list, adds elements to it, removes an element, and prints the list before and after removal.
+"""
+
+
+"""
+NOTIONS COVERED
+
+Templates (class templates)
+Function templates
+"""
