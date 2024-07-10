@@ -1,0 +1,88 @@
+// Shape Calculator Template
+// This program calculates the area and perimeter of geometric shapes using templates.
+
+#include <iostream>
+
+// Define a template for a Shape class
+template <typename T>
+class Shape {
+public:
+    // Virtual functions for area and perimeter
+    virtual T area() const = 0;
+    virtual T perimeter() const = 0;
+};
+
+// Define a Circle class derived from Shape
+template <typename T>
+class Circle : public Shape<T> {
+private:
+    T radius;
+
+public:
+    // Constructor to initialize the radius
+    Circle(T r) : radius(r) {}
+
+    // Calculate the area of the circle (π * r^2)
+    T area() const override {
+        return 3.14159 * radius * radius;
+    }
+
+    // Calculate the perimeter of the circle (2 * π * r)
+    T perimeter() const override {
+        return 2 * 3.14159 * radius;
+    }
+};
+
+// Define a Rectangle class derived from Shape
+template <typename T>
+class Rectangle : public Shape<T> {
+private:
+    T length;
+    T width;
+
+public:
+    // Constructor to initialize length and width
+    Rectangle(T l, T w) : length(l), width(w) {}
+
+    // Calculate the area of the rectangle (length * width)
+    T area() const override {
+        return length * width;
+    }
+
+    // Calculate the perimeter of the rectangle (2 * (length + width))
+    T perimeter() const override {
+        return 2 * (length + width);
+    }
+};
+
+int main() {
+    // Create objects of Circle and Rectangle
+    Circle<double> circle(5.0);
+    Rectangle<int> rectangle(4, 6);
+
+    // Calculate and display the area and perimeter of the circle
+    std::cout << "Circle - Area: " << circle.area() << ", Perimeter: " << circle.perimeter() << std::endl;
+
+    // Calculate and display the area and perimeter of the rectangle
+    std::cout << "Rectangle - Area: " << rectangle.area() << ", Perimeter: " << rectangle.perimeter() << std::endl;
+
+    return 0;
+}
+
+
+"""
+EXPLANATION OF THE CODE
+
+The program defines a template Shape class with virtual functions area() and perimeter() to calculate and return the area and perimeter of shapes.
+It then implements specific shape classes (Circle and Rectangle) derived from Shape. These classes override the virtual functions to provide specific calculations for circles and rectangles.
+In main(), instances of Circle and Rectangle are created with specific dimensions (radius for Circle and length/width for Rectangle).
+The program then calculates and prints the area and perimeter for each shape using the respective member functions.
+"""
+
+
+"""
+NOTIONS COVERED
+
+Templates
+Class templates
+"""
