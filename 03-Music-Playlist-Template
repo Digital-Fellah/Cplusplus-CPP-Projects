@@ -1,0 +1,97 @@
+// Music Playlist Template
+// This program demonstrates the use of templates to create a generic music playlist management system.
+
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+// Define a template class for a generic playlist item
+template<typename T>
+class PlaylistItem {
+private:
+    T item;  // The item in the playlist (could be a song, video, etc.)
+
+public:
+    // Constructor to initialize the playlist item
+    PlaylistItem(const T& item) : item(item) {}
+
+    // Function to get the playlist item
+    T getItem() const {
+        return item;
+    }
+
+    // Function to display details of the playlist item
+    void displayItem() const {
+        cout << item << endl;
+    }
+};
+
+// Define a template class for the playlist itself
+template<typename T>
+class Playlist {
+private:
+    vector<PlaylistItem<T>> items;  // Vector to store playlist items
+
+public:
+    // Function to add an item to the playlist
+    void addItem(const T& item) {
+        PlaylistItem<T> playlistItem(item);
+        items.push_back(playlistItem);
+    }
+
+    // Function to display all items in the playlist
+    void displayPlaylist() const {
+        cout << "Playlist:" << endl;
+        for (const auto& item : items) {
+            item.displayItem();
+        }
+        cout << endl;
+    }
+};
+
+int main() {
+    // Create a playlist of songs (string type)
+    Playlist<string> songPlaylist;
+
+    // Adding songs to the playlist
+    songPlaylist.addItem("Shape of You - Ed Sheeran");
+    songPlaylist.addItem("Believer - Imagine Dragons");
+    songPlaylist.addItem("Dance Monkey - Tones and I");
+
+    // Displaying the playlist
+    songPlaylist.displayPlaylist();
+
+    return 0;
+}
+
+
+"""
+EXPLANATION OF THE CODE
+
+Template Class PlaylistItem:
+Defines a template class PlaylistItem to represent each item in the playlist.
+Contains a private member item of type T (template parameter) to hold the playlist item.
+Constructor initializes item.
+getItem() function returns the playlist item.
+displayItem() function displays the playlist item.
+Template Class Playlist:
+Defines a template class Playlist to manage a collection of PlaylistItem<T>.
+Uses a vector items to store PlaylistItem<T> objects.
+addItem() function adds a new item of type T to the playlist.
+displayPlaylist() function displays all items in the playlist.
+Main Function:
+Creates an instance songPlaylist of Playlist<string> to manage songs (string type).
+Adds songs to the playlist using addItem().
+Displays the playlist using displayPlaylist().
+"""
+
+
+"""
+NOTIONS COVERED
+
+Templates
+Class templates
+Function templates
+"""
