@@ -1,0 +1,70 @@
+// Inventory Management Template
+// This program demonstrates the use of class templates to manage inventory items.
+
+#include <iostream>
+#include <vector>
+
+// Define a template class for Inventory
+template<typename T>
+class Inventory {
+private:
+    std::vector<T> items;  // Container to hold items of type T
+
+public:
+    // Function to add an item to the inventory
+    void addItem(const T& item) {
+        items.push_back(item);
+    }
+
+    // Function to display all items in the inventory
+    void displayInventory() {
+        std::cout << "Inventory Contents:\n";
+        for (const auto& item : items) {
+            std::cout << "- " << item << "\n";
+        }
+    }
+};
+
+int main() {
+    // Create an Inventory of integers
+    Inventory<int> intInventory;
+
+    // Add some integers to the inventory
+    intInventory.addItem(10);
+    intInventory.addItem(20);
+    intInventory.addItem(30);
+
+    // Display the integer inventory
+    intInventory.displayInventory();
+
+    // Create an Inventory of strings
+    Inventory<std::string> stringInventory;
+
+    // Add some strings to the inventory
+    stringInventory.addItem("Apple");
+    stringInventory.addItem("Banana");
+    stringInventory.addItem("Orange");
+
+    // Display the string inventory
+    stringInventory.displayInventory();
+
+    return 0;
+}
+
+
+"""
+EXPLANATION OF THE CODE
+
+Class Template Definition: Defines a template class Inventory that can hold items of any type T.
+addItem Function: Adds an item of type T to the inventory.
+displayInventory Function: Displays all items currently in the inventory.
+"""
+
+
+"""
+
+NOTIONS COVERED
+
+Templates
+Class templates
+"""
