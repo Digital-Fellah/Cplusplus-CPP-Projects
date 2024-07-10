@@ -1,0 +1,64 @@
+// Game Scoreboard Template
+// This program demonstrates the use of templates to create a generic scoreboard for different types of game scores.
+
+#include <iostream>
+#include <string>
+
+// Template class for the scoreboard
+template <typename ScoreType>
+class Scoreboard {
+public:
+    Scoreboard() : score(0) {}  // Constructor initializes score to zero
+    
+    void updateScore(ScoreType points) {
+        score += points;  // Update the score with the given points
+    }
+    
+    void displayScore() {
+        std::cout << "Current Score: " << score << std::endl;  // Display the current score
+    }
+    
+private:
+    ScoreType score;  // Score variable of type ScoreType
+};
+
+int main() {
+    // Create instances of the Scoreboard for different types
+    Scoreboard<int> intScoreboard;
+    Scoreboard<double> doubleScoreboard;
+    
+    // Update and display scores
+    intScoreboard.updateScore(10);
+    intScoreboard.updateScore(5);
+    intScoreboard.displayScore();
+    
+    doubleScoreboard.updateScore(7.5);
+    doubleScoreboard.updateScore(3.2);
+    doubleScoreboard.displayScore();
+    
+    return 0;
+}
+
+
+"""
+
+EXPLANATION OF THE CODE
+
+Template Class Definition: Defines a Scoreboard template class that takes a type parameter ScoreType.
+Constructor: Initializes the score to zero when a Scoreboard object is created.
+updateScore Function: Accepts points of type ScoreType and updates the score accordingly.
+displayScore Function: Prints the current score to the console.
+Main Function:
+Creates instances of Scoreboard for int and double types.
+Updates scores with different values using updateScore.
+Displays the updated scores using displayScore.
+"""
+
+
+"""
+NOTIONS COVERED
+
+Templates
+Class templates
+Function templates
+"""
