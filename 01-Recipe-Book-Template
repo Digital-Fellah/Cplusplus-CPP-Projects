@@ -1,0 +1,63 @@
+// This program implements a simple recipe book using C++ templates.
+
+#include <iostream>
+#include <vector>
+#include <string>
+
+// Define a template for recipes
+template<typename T>
+class RecipeBook {
+private:
+    std::vector<T> recipes;  // Vector to store recipes
+
+public:
+    // Function to add a new recipe to the book
+    void addRecipe(const T& recipe) {
+        recipes.push_back(recipe);
+    }
+
+    // Function to display all recipes in the book
+    void displayRecipes() {
+        std::cout << "Recipes in the book:\n";
+        for (const auto& recipe : recipes) {
+            std::cout << "- " << recipe << "\n";
+        }
+    }
+};
+
+int main() {
+    // Create a RecipeBook for string recipes
+    RecipeBook<std::string> myRecipeBook;
+
+    // Add some recipes
+    myRecipeBook.addRecipe("Pasta Carbonara");
+    myRecipeBook.addRecipe("Chocolate Cake");
+    myRecipeBook.addRecipe("Chicken Tikka Masala");
+
+    // Display all recipes
+    myRecipeBook.displayRecipes();
+
+    return 0;
+}
+
+
+"""
+EXPLANATION OF THE CODE
+
+We define a template class RecipeBook that can store recipes of any type T.
+The recipes vector inside the class stores recipes.
+The addRecipe function adds a new recipe to the recipes vector.
+The displayRecipes function prints all recipes stored in the recipes vector.
+In main, we instantiate a RecipeBook specialized for std::string.
+We add some recipes to myRecipeBook.
+Finally, we display all recipes stored in myRecipeBook.
+"""
+
+
+"""
+NOTIONS COVERED
+
+Templates: The entire program revolves around defining and using a class template RecipeBook.
+Basic Syntax: Introduction to class templates, template parameters (<typename T>), template member functions.
+Function Templates: While not explicitly used in this example, the concept of member functions within a template class is akin to function templates.
+"""
