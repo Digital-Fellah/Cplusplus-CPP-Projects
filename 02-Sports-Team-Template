@@ -1,0 +1,65 @@
+// This program manages sports teams using templates.
+
+#include <iostream>
+#include <vector>
+#include <string>
+
+// Define a class template for a Sports Team
+template <typename PlayerType>
+class Team {
+private:
+    std::string teamName;
+    std::vector<PlayerType> players; // Store players of generic type
+
+public:
+    // Constructor to initialize the team with a name
+    Team(const std::string& name) : teamName(name) {}
+
+    // Function to add a player to the team
+    void addPlayer(const PlayerType& player) {
+        players.push_back(player);
+    }
+
+    // Function to print all players in the team
+    void printPlayers() const {
+        std::cout << "Team: " << teamName << std::endl;
+        std::cout << "Players:" << std::endl;
+        for (const auto& player : players) {
+            std::cout << "- " << player << std::endl;
+        }
+    }
+};
+
+int main() {
+    // Create a football team of string type (representing player names)
+    Team<std::string> footballTeam("Football Team");
+
+    // Add players to the football team
+    footballTeam.addPlayer("John Doe");
+    footballTeam.addPlayer("Jane Smith");
+    footballTeam.addPlayer("Mike Johnson");
+
+    // Print the players in the football team
+    footballTeam.printPlayers();
+
+    return 0;
+}
+
+
+"""
+EXPLANATION OF THE CODE
+
+The program defines a Team class template that can manage teams of any player type.
+The Team class has private data members teamName (to store the team's name) and players (a vector to store players of generic type PlayerType).
+It includes a constructor to initialize a team with a name (Team(const std::string& name)).
+The addPlayer function allows adding a player of type PlayerType to the team.
+The printPlayers function prints the team's name followed by a list of all players.
+"""
+
+
+"""
+NOTIONS COVERED
+
+Templates
+Class templates
+"""
