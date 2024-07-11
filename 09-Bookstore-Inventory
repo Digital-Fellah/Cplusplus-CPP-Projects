@@ -1,0 +1,127 @@
+// Bookstore Inventory Management Program
+// This program allows users to manage a bookstore inventory using C++ STL containers.
+
+#include <iostream>
+#include <vector>
+#include <algorithm> // for std::find_if
+
+using namespace std;
+
+// Define a Book structure to hold book information
+struct Book {
+    string title;
+    string author;
+    string genre;
+    double price;
+
+    // Constructor to initialize the Book
+    Book(string t, string a, string g, double p)
+        : title(t), author(a), genre(g), price(p) {}
+};
+
+int main() {
+    vector<Book> inventory; // Using vector to store the books in the inventory
+
+    // Add initial books to the inventory
+    inventory.push_back(Book("The Great Gatsby", "F. Scott Fitzgerald", "Fiction", 12.99));
+    inventory.push_back(Book("To Kill a Mockingbird", "Harper Lee", "Fiction", 10.50));
+    inventory.push_back(Book("1984", "George Orwell", "Dystopian", 9.75));
+
+    // Display menu options
+    cout << "Bookstore Inventory Management\n";
+    cout << "1. Add a new book\n";
+    cout << "2. Remove a book\n";
+    cout << "3. Display all books\n";
+    cout << "4. Exit\n";
+
+    int choice;
+    do {
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1: {
+                // Adding a new book
+                string title, author, genre;
+                double price;
+                cout << "Enter title: ";
+                cin.ignore(); // Ignore newline character left in the buffer
+                getline(cin, title);
+                cout << "Enter author: ";
+                getline(cin, author);
+                cout << "Enter genre: ";
+                getline(cin, genre);
+                cout << "Enter price: ";
+                cin >> price;
+                inventory.push_back(Book(title, author, genre, price));
+                cout << "Book added successfully!\n";
+                break;
+            }
+            case 2: {
+                // Removing a book
+                string titleToRemove;
+                cout << "Enter the title of the book to remove: ";
+                cin.ignore(); // Ignore newline character left in the buffer
+                getline(cin, titleToRemove);
+
+                auto it = find_if(inventory.begin(), inventory.end(), [&](const Book& b) {
+                    return b.title == titleToRemove;
+                });
+
+                if (it != inventory.end()) {
+                    inventory.erase(it);
+                    cout << "Book removed successfully!\n";
+                } else {
+                    cout << "Book not found in inventory.\n";
+                }
+                break;
+            }
+            case 3: {
+                // Displaying all books
+                if (inventory.empty()) {
+                    cout << "Inventory is empty.\n";
+                } else {
+                    cout << "Current Inventory:\n";
+                    for (const auto& book : inventory) {
+                        cout << "Title: " << book.title << endl;
+                        cout << "Author: " << book.author << endl;
+                        cout << "Genre: " << book.genre << endl;
+                        cout << "Price: $" << book.price << endl << endl;
+                    }
+                }
+                break;
+            }
+            case 4:
+                // Exit the program
+                cout << "Exiting program.\n";
+                break;
+            default:
+                cout << "Invalid choice. Please try again.\n";
+                break;
+        }
+
+    } while (choice != 4);
+
+    return 0;
+}
+
+
+"""
+EXPLANATION OF THE CODE
+
+The program starts by initializing a vector inventory to store Book objects.
+It provides a menu-driven interface for users to add a new book (1), remove a book (2), display all books (3), or exit (4).
+Adding a new book prompts the user to enter details (title, author, genre, price), creates a new Book object, and adds it to the inventory.
+Removing a book allows the user to enter the title of the book to remove. It searches for the book in the inventory using std::find_if and removes it if found.
+Displaying all books iterates through the inventory and prints details (title, author, genre, price) of each Book.
+The program continues to run until the user chooses to exit.
+"""
+
+
+"""
+NOTIONS COVERED
+
+STL Sequential Containers (vector)
+Types of Sequential Containers
+Dealing with Objects as Container Elements
+"""
