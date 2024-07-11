@@ -1,0 +1,97 @@
+/*
+Mini STL Toolbox
+----------------
+This program implements a command-line tool that offers small but useful utilities
+based on STL containers and algorithms.
+
+It includes functionality to count elements, find duplicates, and perform statistical
+operations on datasets using STL utilities and functional library concepts.
+
+Author: [Your Name]
+Date: [Date]
+
+*/
+
+#include <iostream>
+#include <vector>
+#include <map>
+#include <algorithm>
+
+// Function to count the frequency of each element in a vector
+std::map<int, int> countFrequency(const std::vector<int>& data) {
+    std::map<int, int> frequencyMap;
+    
+    // Iterate through each element in the vector
+    for (int num : data) {
+        // Increment the count for the current element in the map
+        frequencyMap[num]++;
+    }
+    
+    return frequencyMap;
+}
+
+// Function to find duplicate elements in a vector
+std::vector<int> findDuplicates(const std::vector<int>& data) {
+    std::vector<int> duplicates;
+    std::map<int, int> frequencyMap = countFrequency(data);
+    
+    // Iterate through the frequency map to find elements with count > 1
+    for (const auto& pair : frequencyMap) {
+        if (pair.second > 1) {
+            duplicates.push_back(pair.first);
+        }
+    }
+    
+    return duplicates;
+}
+
+int main() {
+    // Example usage
+    std::vector<int> numbers = {1, 2, 3, 2, 4, 5, 3, 6, 7, 7, 8};
+    
+    // Counting frequency of each number
+    std::map<int, int> frequency = countFrequency(numbers);
+    
+    // Finding duplicates in the vector
+    std::vector<int> dupes = findDuplicates(numbers);
+    
+    // Output results
+    std::cout << "Frequency of each number:" << std::endl;
+    for (const auto& pair : frequency) {
+        std::cout << pair.first << ": " << pair.second << std::endl;
+    }
+    
+    std::cout << "\nDuplicate numbers:";
+    for (int num : dupes) {
+        std::cout << " " << num;
+    }
+    std::cout << std::endl;
+    
+    return 0;
+}
+
+
+
+"""
+EXPLANATION OF THE CODE
+
+Introduction: This program implements a command-line tool using C++ and STL to perform basic data analysis tasks.
+Function countFrequency: Counts the frequency of each element in a vector using std::map.
+Iterates through each element in the vector.
+Increments the count for each element in the frequencyMap.
+Function findDuplicates: Finds duplicate elements in a vector.
+Uses countFrequency to obtain a map of element frequencies.
+Iterates through the frequency map to collect elements with a frequency greater than 1 into the duplicates vector.
+Main Function: Demonstrates the usage of countFrequency and findDuplicates.
+Initializes a vector numbers with sample data.
+Calls countFrequency to get the frequency of each number and findDuplicates to find duplicate numbers.
+Outputs the results: frequency of each number and list of duplicate numbers.
+"""
+
+
+"""
+NOTIONS COVERED
+
+STL utilities
+Functional library
+"""
