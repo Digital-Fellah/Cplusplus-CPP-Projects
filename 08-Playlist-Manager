@@ -1,0 +1,116 @@
+// Playlist Manager
+// This program allows users to manage playlists for music, utilizing different STL sequential containers.
+
+#include <iostream>
+#include <vector>
+#include <deque>
+#include <list>
+#include <algorithm>  // for std::find
+#include <ctime>      // for std::time
+#include <cstdlib>    // for std::rand, std::srand
+
+using namespace std;
+
+// Song structure to hold information about each song
+struct Song {
+    string title;
+    string artist;
+    int duration; // in seconds
+
+    // Constructor to initialize the song
+    Song(string _title, string _artist, int _duration)
+        : title(_title), artist(_artist), duration(_duration) {}
+};
+
+// Function to display a single song
+void displaySong(const Song& song) {
+    cout << "Title: " << song.title << " | Artist: " << song.artist << " | Duration: " << song.duration << "s" << endl;
+}
+
+// Function to display all songs in a container
+template <typename Container>
+void displayAllSongs(const Container& songs) {
+    for (const auto& song : songs) {
+        displaySong(song);
+    }
+}
+
+// Function to add a new song to a container
+template <typename Container>
+void addSong(Container& songs, const Song& newSong) {
+    songs.push_back(newSong);
+    cout << "Song added successfully!" << endl;
+}
+
+// Function to remove a song from a container
+template <typename Container>
+void removeSong(Container& songs, const string& titleToRemove) {
+    auto it = find_if(songs.begin(), songs.end(), [&titleToRemove](const Song& song) {
+        return song.title == titleToRemove;
+    });
+
+    if (it != songs.end()) {
+        songs.erase(it);
+        cout << "Song '" << titleToRemove << "' removed successfully!" << endl;
+    } else {
+        cout << "Song '" << titleToRemove << "' not found in the playlist." << endl;
+    }
+}
+
+// Function to shuffle the songs in a container
+template <typename Container>
+void shufflePlaylist(Container& songs) {
+    srand(static_cast<unsigned int>(time(nullptr)));
+    random_shuffle(songs.begin(), songs.end());
+    cout << "Playlist shuffled successfully!" << endl;
+}
+
+int main() {
+    // Initialize a vector, deque, and list to store playlists
+    vector<Song> playlistVector;
+    deque<Song> playlistDeque;
+    list<Song> playlistList;
+
+    // Adding some initial songs to each playlist for demonstration
+    addSong(playlistVector, Song("Bohemian Rhapsody", "Queen", 367));
+    addSong(playlistVector, Song("Hotel California", "Eagles", 391));
+    addSong(playlistDeque, Song("Stairway to Heaven", "Led Zeppelin", 482));
+    addSong(playlistDeque, Song("Imagine", "John Lennon", 184));
+    addSong(playlistList, Song("Hey Jude", "The Beatles", 431));
+    addSong(playlistList, Song("Smells Like Teen Spirit", "Nirvana", 301));
+
+    // Display all songs in each playlist
+    cout << "\n--- Playlist Vector ---" << endl;
+    displayAllSongs(playlistVector);
+    cout << "\n--- Playlist Deque ---" << endl;
+    displayAllSongs(playlistDeque);
+    cout << "\n--- Playlist List ---" << endl;
+    displayAllSongs(playlistList);
+
+    // Example operations: removing a song, shuffling a playlist
+    cout << "\n--- Removing 'Imagine' from Playlist Deque ---" << endl;
+    removeSong(playlistDeque, "Imagine");
+
+    cout << "\n--- Shuffling Playlist Vector ---" << endl;
+    shufflePlaylist(playlistVector);
+
+    return 0;
+}
+
+
+"""
+EXPLANATION OF THE CODE
+
+The program initializes three different STL sequential containers (vector, deque, list) to store playlists of songs.
+Functions are defined to add songs (addSong), remove songs (removeSong), display all songs (displayAllSongs), and shuffle playlists (shufflePlaylist).
+Each function operates on the respective container type (vector, deque, list) using appropriate methods to manipulate songs.
+Example songs are added to each playlist container initially for demonstration purposes.
+"""
+
+
+"""
+NOTIONS COVERED
+
+STL Sequential Containers (vector, deque, list)
+Dealing with Objects as Container Elements
+"""
