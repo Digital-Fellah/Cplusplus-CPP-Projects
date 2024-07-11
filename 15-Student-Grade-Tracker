@@ -1,0 +1,183 @@
+// Project 15: Student Grade Tracker
+// This program manages student grades for various subjects using C++ STL map.
+
+#include <iostream>
+#include <map>
+#include <string>
+
+using namespace std;
+
+// Function to display menu and get user's choice
+char displayMenu() {
+    cout << "\n===== Student Grade Tracker Menu =====\n";
+    cout << "1. Add Student\n";
+    cout << "2. Add Grade\n";
+    cout << "3. Calculate Average Grade\n";
+    cout << "4. Display Highest Grade\n";
+    cout << "5. Display Lowest Grade\n";
+    cout << "6. Exit\n";
+    cout << "Enter your choice: ";
+    char choice;
+    cin >> choice;
+    return choice;
+}
+
+int main() {
+    // Define a map to store student names and their grades
+    map<string, map<string, double>> studentGrades;
+
+    char choice;
+    do {
+        // Display menu and get user's choice
+        choice = displayMenu();
+
+        switch (choice) {
+            case '1': {
+                // Add a new student
+                string name;
+                cout << "Enter student's name: ";
+                cin >> name;
+                // Check if student already exists
+                if (studentGrades.find(name) == studentGrades.end()) {
+                    // If not, add the student with an empty grade map
+                    studentGrades[name] = map<string, double>();
+                    cout << "Student '" << name << "' added successfully.\n";
+                } else {
+                    cout << "Student '" << name << "' already exists.\n";
+                }
+                break;
+            }
+            case '2': {
+                // Add grade for a student
+                string name, subject;
+                double grade;
+                cout << "Enter student's name: ";
+                cin >> name;
+                // Check if student exists
+                auto it = studentGrades.find(name);
+                if (it != studentGrades.end()) {
+                    cout << "Enter subject: ";
+                    cin >> subject;
+                    cout << "Enter grade: ";
+                    cin >> grade;
+                    // Add grade to the student's record
+                    it->second[subject] = grade;
+                    cout << "Grade '" << grade << "' added for '" << subject << "' to student '" << name << "'.\n";
+                } else {
+                    cout << "Student '" << name << "' does not exist.\n";
+                }
+                break;
+            }
+            case '3': {
+                // Calculate average grade for a student
+                string name;
+                cout << "Enter student's name: ";
+                cin >> name;
+                // Check if student exists
+                auto it = studentGrades.find(name);
+                if (it != studentGrades.end()) {
+                    double total = 0;
+                    int count = 0;
+                    // Calculate total grades and count subjects
+                    for (const auto& pair : it->second) {
+                        total += pair.second;
+                        count++;
+                    }
+                    if (count > 0) {
+                        // Calculate and display average grade
+                        double average = total / count;
+                        cout << "Average grade for student '" << name << "' is: " << average << "\n";
+                    } else {
+                        cout << "No grades found for student '" << name << "'.\n";
+                    }
+                } else {
+                    cout << "Student '" << name << "' does not exist.\n";
+                }
+                break;
+            }
+            case '4': {
+                // Display highest grade for a student
+                string name;
+                cout << "Enter student's name: ";
+                cin >> name;
+                // Check if student exists
+                auto it = studentGrades.find(name);
+                if (it != studentGrades.end()) {
+                    double highest = -1;
+                    string highestSubject;
+                    // Find the highest grade and its corresponding subject
+                    for (const auto& pair : it->second) {
+                        if (pair.second > highest) {
+                            highest = pair.second;
+                            highestSubject = pair.first;
+                        }
+                    }
+                    if (highest >= 0) {
+                        // Display highest grade and subject
+                        cout << "Highest grade for student '" << name << "' is: " << highest << " in '" << highestSubject << "'.\n";
+                    } else {
+                        cout << "No grades found for student '" << name << "'.\n";
+                    }
+                } else {
+                    cout << "Student '" << name << "' does not exist.\n";
+                }
+                break;
+            }
+            case '5': {
+                // Display lowest grade for a student
+                string name;
+                cout << "Enter student's name: ";
+                cin >> name;
+                // Check if student exists
+                auto it = studentGrades.find(name);
+                if (it != studentGrades.end()) {
+                    double lowest = 101; // Assuming grades are between 0 and 100
+                    string lowestSubject;
+                    // Find the lowest grade and its corresponding subject
+                    for (const auto& pair : it->second) {
+                        if (pair.second < lowest) {
+                            lowest = pair.second;
+                            lowestSubject = pair.first;
+                        }
+                    }
+                    if (lowest <= 100) {
+                        // Display lowest grade and subject
+                        cout << "Lowest grade for student '" << name << "' is: " << lowest << " in '" << lowestSubject << "'.\n";
+                    } else {
+                        cout << "No grades found for student '" << name << "'.\n";
+                    }
+                } else {
+                    cout << "Student '" << name << "' does not exist.\n";
+                }
+                break;
+            }
+            case '6':
+                cout << "Exiting program. Goodbye!\n";
+                break;
+            default:
+                cout << "Invalid choice. Please enter a valid option.\n";
+                break;
+        }
+    } while (choice != '6');
+
+    return 0;
+}
+
+
+
+"""
+EXPLANATION OF THE CODE
+
+The program uses a map studentGrades where each key is a student's name and the value is another map containing subjects and their respective grades.
+The main function displays a menu using displayMenu() function and processes user input to perform operations like adding students, adding grades, calculating average grades, and displaying highest and lowest grades for students.
+"""
+
+
+"""
+NOTIONS COVERED
+
+STL Associative containers (map)
+Behavior and API of map
+Putting objects into map
+Usage scenarios
+"""
