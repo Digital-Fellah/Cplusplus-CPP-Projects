@@ -1,0 +1,64 @@
+// Project: Playlist Shuffler
+// Description: This program shuffles the songs in a playlist file.
+
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <algorithm>
+#include <random>
+
+using namespace std;
+
+int main() {
+    // Open the input file containing the playlist
+    ifstream infile("playlist.txt");
+    if (!infile) {
+        cerr << "Error: Unable to open input file 'playlist.txt'\n";
+        return 1;
+    }
+
+    // Read songs from the file into a vector
+    vector<string> playlist;
+    string song;
+    while (getline(infile, song)) {
+        playlist.push_back(song);
+    }
+    infile.close();
+
+    // Display the original playlist
+    cout << "Original Playlist:\n";
+    for (const auto& s : playlist) {
+        cout << s << "\n";
+    }
+    cout << "\n";
+
+    // Shuffle the playlist using random_shuffle
+    random_shuffle(playlist.begin(), playlist.end());
+
+    // Display the shuffled playlist
+    cout << "Shuffled Playlist:\n";
+    for (const auto& s : playlist) {
+        cout << s << "\n";
+    }
+
+    return 0;
+}
+
+
+
+"""
+EXPLANATION OF THE CODE
+
+Opens an input file ("playlist.txt") and reads the list of songs into a vector.
+Displays the original playlist to the user.
+Uses random_shuffle to randomly reorder the songs in the playlist vector.
+Displays the shuffled playlist to the user.
+"""
+
+
+"""
+NOTIONS COVERED
+
+random_shuffle: Randomly shuffles elements in a range.
+swap_ranges: Swaps ranges of elements between two containers.
+"""
