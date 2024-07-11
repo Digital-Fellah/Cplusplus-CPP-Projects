@@ -1,0 +1,118 @@
+// Event Scheduler Program
+// This program manages events using a multiset, allowing users to add, display, and search events.
+
+#include <iostream>
+#include <set>
+#include <string>
+
+using namespace std;
+
+// Define a struct to hold event details
+struct Event {
+    string title;
+    string date;
+    string time;
+    string location;
+};
+
+int main() {
+    multiset<Event> events;  // Create a multiset to store events
+
+    // Menu-driven loop to interact with the event scheduler
+    while (true) {
+        cout << "===== Event Scheduler Menu =====" << endl;
+        cout << "1. Add Event" << endl;
+        cout << "2. Display Events" << endl;
+        cout << "3. Search Events by Date" << endl;
+        cout << "4. Exit" << endl;
+        cout << "===============================" << endl;
+        cout << "Enter your choice: ";
+
+        int choice;
+        cin >> choice;
+
+        switch (choice) {
+            case 1: {
+                Event newEvent;
+                cout << "Enter event title: ";
+                cin.ignore();  // Clear the input buffer
+                getline(cin, newEvent.title);
+                cout << "Enter event date (YYYY-MM-DD): ";
+                getline(cin, newEvent.date);
+                cout << "Enter event time (HH:MM): ";
+                getline(cin, newEvent.time);
+                cout << "Enter event location: ";
+                getline(cin, newEvent.location);
+
+                events.insert(newEvent);  // Add event to multiset
+                cout << "Event added successfully!" << endl;
+                break;
+            }
+            case 2: {
+                cout << "===== List of Events =====" << endl;
+                for (const auto& event : events) {
+                    cout << "Title: " << event.title << endl;
+                    cout << "Date: " << event.date << endl;
+                    cout << "Time: " << event.time << endl;
+                    cout << "Location: " << event.location << endl;
+                    cout << "---------------------------" << endl;
+                }
+                break;
+            }
+            case 3: {
+                string searchDate;
+                cout << "Enter date to search (YYYY-MM-DD): ";
+                cin.ignore();  // Clear the input buffer
+                getline(cin, searchDate);
+
+                cout << "===== Events on " << searchDate << " =====" << endl;
+                bool found = false;
+                for (const auto& event : events) {
+                    if (event.date == searchDate) {
+                        cout << "Title: " << event.title << endl;
+                        cout << "Time: " << event.time << endl;
+                        cout << "Location: " << event.location << endl;
+                        cout << "---------------------------" << endl;
+                        found = true;
+                    }
+                }
+                if (!found) {
+                    cout << "No events found on " << searchDate << "." << endl;
+                }
+                break;
+            }
+            case 4: {
+                cout << "Exiting program. Goodbye!" << endl;
+                return 0;
+            }
+            default:
+                cout << "Invalid choice. Please enter a number from 1 to 4." << endl;
+        }
+    }
+
+    return 0;
+}
+
+
+"""
+EXPLANATION OF THE CODE
+
+The program starts by defining a struct Event to store event details such as title, date, time, and location.
+A multiset<Event> named events is created to store multiple events sorted by their default sorting criteria (which can be customized by defining comparison operators).
+The program uses a menu-driven approach to interact with the user, offering options to add events, display all events, search events by date, and exit the program.
+Adding an event (case 1): Prompts the user to enter event details, creates an Event object, inserts it into the multiset using events.insert(newEvent).
+Displaying events (case 2): Iterates through the multiset and prints each event's details.
+Searching events by date (case 3): Prompts the user to enter a date, iterates through the multiset to find events matching the specified date, and displays them.
+Exiting the program (case 4): Ends the program execution.
+Error handling: Checks for invalid menu choices and prompts the user to enter a valid option.
+"""
+
+
+"""
+NOTIONS COVERED
+
+STL Associative containers (multiset)
+Behavior and API of multiset
+Putting objects into multiset
+Usage scenarios
+"""
