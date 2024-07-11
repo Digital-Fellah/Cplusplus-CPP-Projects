@@ -1,0 +1,74 @@
+// Song Database Management Program
+// This program allows users to manage a database of songs using a map container.
+
+#include <iostream>
+#include <map>
+#include <string>
+
+using namespace std;
+
+// Structure to hold song details
+struct Song {
+    string artist;
+    string genre;
+    int duration; // in seconds
+};
+
+int main() {
+    // Map to store songs, where the key is the song title and the value is a Song struct
+    map<string, Song> songDatabase;
+
+    // Adding songs to the database
+    Song song1 = {"Artist1", "Pop", 240};
+    Song song2 = {"Artist2", "Rock", 320};
+    Song song3 = {"Artist3", "Jazz", 180};
+
+    // Inserting songs into the map
+    songDatabase["Song1"] = song1;
+    songDatabase["Song2"] = song2;
+    songDatabase["Song3"] = song3;
+
+    // Displaying all songs in the database
+    cout << "All Songs in the Database:\n";
+    for (const auto& pair : songDatabase) {
+        cout << "Title: " << pair.first << endl;
+        cout << "Artist: " << pair.second.artist << endl;
+        cout << "Genre: " << pair.second.genre << endl;
+        cout << "Duration: " << pair.second.duration << " seconds\n\n";
+    }
+
+    // Searching for a song by title
+    string searchTitle = "Song2";
+    auto it = songDatabase.find(searchTitle);
+    if (it != songDatabase.end()) {
+        cout << "Song Found:\n";
+        cout << "Title: " << it->first << endl;
+        cout << "Artist: " << it->second.artist << endl;
+        cout << "Genre: " << it->second.genre << endl;
+        cout << "Duration: " << it->second.duration << " seconds\n";
+    } else {
+        cout << "Song with title '" << searchTitle << "' not found.\n";
+    }
+
+    return 0;
+}
+
+
+"""
+EXPLANATION OF THE CODE
+
+Initializes a map songDatabase to store songs using song titles as keys and Song structs as values.
+Adds sample songs (song1, song2, song3) to the songDatabase.
+Displays all songs in the database, including their title, artist, genre, and duration.
+Searches for a specific song ("Song2") by title and prints its details if found.
+"""
+
+
+"""
+NOTIONS COVERED
+
+STL Associative containers (map): Used to store and manage songs efficiently by their titles.
+Behavior and API of map: Demonstrated insertion (map[key] = value), iteration (for (const auto& pair : map)), and searching (map.find(key)).
+Putting objects into map: Songs (Song structs) are inserted into the map<string, Song>.
+Usage scenarios: Manages a song database where users can add, list, and search for songs efficiently.
+"""
