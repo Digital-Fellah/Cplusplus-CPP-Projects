@@ -1,0 +1,45 @@
+// Student Queue System
+// This program simulates a queue system where students wait for administrative tasks.
+
+#include <iostream>
+#include <queue>  // Include the queue container adapter from STL
+
+using namespace std;
+
+int main() {
+    queue<string> studentQueue;  // Declare a queue to hold student names
+
+    // Simulation of the queue system
+    // Adding students to the queue
+    studentQueue.push("Alice");
+    studentQueue.push("Bob");
+    studentQueue.push("Charlie");
+    studentQueue.push("David");
+
+    // Displaying the current queue status
+    cout << "Current queue:" << endl;
+    while (!studentQueue.empty()) {
+        cout << studentQueue.front() << endl;  // Output the front student in the queue
+        studentQueue.pop();  // Remove the front student from the queue
+    }
+
+    return 0;
+}
+
+
+"""
+EXPLANATION OF THE CODE
+
+The program starts by including necessary headers (iostream for input/output operations and queue for using the queue container adapter).
+A queue named studentQueue is declared to store student names.
+Students are added to the queue using the push method.
+The program then displays the current queue status by iterating through the queue using a while loop, printing each student's name with front() and removing them from the queue using pop().
+"""
+
+
+"""
+NOTIONS COVERED
+
+Sequential Container Adapters (queue)
+Types of Sequential Containers
+"""
