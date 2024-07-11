@@ -1,0 +1,98 @@
+// To-Do List Manager
+// This program manages a to-do list using a priority queue to prioritize tasks.
+
+#include <iostream>
+#include <queue>
+#include <string>
+
+using namespace std;
+
+// Task structure to hold task details
+struct Task {
+    string name;
+    int priority; // Priority level (higher number means higher priority)
+
+    // Overloading comparison operator for priority queue
+    bool operator<(const Task& rhs) const {
+        return priority < rhs.priority; // Higher priority tasks come first
+    }
+};
+
+int main() {
+    priority_queue<Task> todoList; // Priority queue to store tasks
+
+    int choice;
+    do {
+        // Menu
+        cout << "\n======= To-Do List Manager =======\n";
+        cout << "1. Add Task\n";
+        cout << "2. Complete Task\n";
+        cout << "3. View Tasks\n";
+        cout << "4. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch(choice) {
+            case 1: {
+                Task newTask;
+                cout << "Enter task name: ";
+                cin.ignore(); // Ignore newline character from previous input
+                getline(cin, newTask.name);
+                cout << "Enter priority (1-5, where 5 is highest priority): ";
+                cin >> newTask.priority;
+                todoList.push(newTask); // Add task to priority queue
+                cout << "Task added!\n";
+                break;
+            }
+            case 2: {
+                if (todoList.empty()) {
+                    cout << "No tasks to complete!\n";
+                } else {
+                    cout << "Completed task: " << todoList.top().name << "\n";
+                    todoList.pop(); // Remove highest priority task
+                }
+                break;
+            }
+            case 3: {
+                if (todoList.empty()) {
+                    cout << "No tasks in the list.\n";
+                } else {
+                    cout << "===== Tasks =====\n";
+                    int count = 1;
+                    priority_queue<Task> temp = todoList; // Temporary queue for display
+                    while (!temp.empty()) {
+                        cout << count << ". " << temp.top().name << " (Priority: " << temp.top().priority << ")\n";
+                        temp.pop();
+                        count++;
+                    }
+                }
+                break;
+            }
+            case 4:
+                cout << "Exiting program.\n";
+                break;
+            default:
+                cout << "Invalid choice. Please enter a number between 1 and 4.\n";
+                break;
+        }
+    } while (choice != 4);
+
+    return 0;
+}
+
+
+"""
+EXPLANATION OF THE CODE
+
+The program manages a to-do list using a priority queue where tasks are prioritized based on their assigned priority level.
+Users can add tasks with a name and priority level (1-5, where 5 is highest priority), complete tasks (removing the highest priority task), and view tasks sorted by priority.
+The program includes a menu-driven interface to interact with the to-do list functionalities.
+"""
+
+
+"""
+NOTIONS COVERED
+
+Sequential Container Adapters (priority queue)
+Types of Sequential Containers
+"""
