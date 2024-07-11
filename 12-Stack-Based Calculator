@@ -1,0 +1,155 @@
+// Stack-Based Calculator
+// This program implements a basic calculator using a stack-based approach for evaluating infix expressions.
+
+#include <iostream>
+#include <stack>
+#include <string>
+#include <cctype> // for isdigit()
+
+using namespace std;
+
+// Function to evaluate an infix expression
+int evaluateExpression(const string& expression);
+
+int main() {
+    string expression;
+    cout << "Enter an arithmetic expression (infix notation): ";
+    getline(cin, expression); // Read the entire line of input
+
+    int result = evaluateExpression(expression);
+
+    cout << "Result: " << result << endl;
+
+    return 0;
+}
+
+// Function to evaluate an infix expression using a stack-based approach
+int evaluateExpression(const string& expression) {
+    stack<int> operands; // Stack to store operands
+    stack<char> operators; // Stack to store operators (+, -, *, /)
+
+    int num = 0;
+    bool hasNum = false;
+
+    for (size_t i = 0; i < expression.length(); ++i) {
+        char ch = expression[i];
+
+        // If current character is a digit, accumulate the number
+        if (isdigit(ch)) {
+            num = num * 10 + (ch - '0');
+            hasNum = true;
+        } else if (isspace(ch)) {
+            continue; // Skip whitespace
+        } else {
+            // If we have accumulated a number, push it to operands stack
+            if (hasNum) {
+                operands.push(num);
+                num = 0;
+                hasNum = false;
+            }
+
+            // Process operators
+            if (ch == '(') {
+                operators.push(ch); // Push '(' onto operators stack
+            } else if (ch == ')') {
+                // Evaluate expression until '(' is encountered
+                while (!operators.empty() && operators.top() != '(') {
+                    int operand2 = operands.top();
+                    operands.pop();
+                    int operand1 = operands.top();
+                    operands.pop();
+                    char op = operators.top();
+                    operators.pop();
+
+                    // Perform operation and push result back to operands stack
+                    if (op == '+') {
+                        operands.push(operand1 + operand2);
+                    } else if (op == '-') {
+                        operands.push(operand1 - operand2);
+                    } else if (op == '*') {
+                        operands.push(operand1 * operand2);
+                    } else if (op == '/') {
+                        operands.push(operand1 / operand2);
+                    }
+                }
+                operators.pop(); // Pop '(' from operators stack
+            } else {
+                // Operator encountered (+, -, *, /)
+                // Evaluate higher or equal precedence operators already in stack
+                while (!operators.empty() && (ch != '(') &&
+                       ((ch == '*' || ch == '/') ||
+                        (operators.top() == '+' || operators.top() == '-'))) {
+                    int operand2 = operands.top();
+                    operands.pop();
+                    int operand1 = operands.top();
+                    operands.pop();
+                    char op = operators.top();
+                    operators.pop();
+
+                    // Perform operation and push result back to operands stack
+                    if (op == '+') {
+                        operands.push(operand1 + operand2);
+                    } else if (op == '-') {
+                        operands.push(operand1 - operand2);
+                    } else if (op == '*') {
+                        operands.push(operand1 * operand2);
+                    } else if (op == '/') {
+                        operands.push(operand1 / operand2);
+                    }
+                }
+                operators.push(ch); // Push current operator onto operators stack
+            }
+        }
+    }
+
+    // Push the last accumulated number if any
+    if (hasNum) {
+        operands.push(num);
+    }
+
+    // Evaluate remaining operators in the stack
+    while (!operators.empty()) {
+        int operand2 = operands.top();
+        operands.pop();
+        int operand1 = operands.top();
+        operands.pop();
+        char op = operators.top();
+        operators.pop();
+
+        // Perform operation and push result back to operands stack
+        if (op == '+') {
+            operands.push(operand1 + operand2);
+        } else if (op == '-') {
+            operands.push(operand1 - operand2);
+        } else if (op == '*') {
+            operands.push(operand1 * operand2);
+        } else if (op == '/') {
+            operands.push(operand1 / operand2);
+        }
+    }
+
+    // The result should be the only item left in the operands stack
+    return operands.top();
+}
+
+
+"""
+EXPLANATION OF THE CODE
+
+The program starts by prompting the user to enter an arithmetic expression in infix notation.
+It reads the expression and passes it to the evaluateExpression function.
+Inside evaluateExpression, two stacks are used: operands to store numbers and operators to store operators.
+It iterates through each character of the expression:
+Accumulates numbers until a non-digit character is encountered.
+Handles parentheses to manage operator precedence and grouping.
+Manages operators (+, -, *, /) based on their precedence rules using the stacks.
+Finally, it evaluates any remaining operators and returns the computed result.
+"""
+
+
+"""
+NOTIONS COVERED
+
+Sequential Container Adapters (stack): Used to implement the stack-based evaluation of infix expressions.
+Types of Sequential Containers: Specifically using stack from the STL.
+"""
