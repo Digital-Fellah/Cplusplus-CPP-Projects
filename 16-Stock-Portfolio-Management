@@ -1,0 +1,67 @@
+// Stock Portfolio Management System
+// This program allows users to manage their stock portfolios,
+// including adding stocks, updating prices, and calculating total portfolio value.
+
+#include <iostream>
+#include <map>
+#include <string>
+
+using namespace std;
+
+// Struct to hold stock details
+struct Stock {
+    double currentPrice;
+    int quantityOwned;
+    string purchaseDate;
+};
+
+int main() {
+    // Create a map to store stocks, where key is stock symbol and value is Stock struct
+    map<string, Stock> portfolio;
+
+    // Add some initial stocks to the portfolio
+    portfolio["AAPL"] = {150.0, 50, "2023-01-15"};
+    portfolio["GOOGL"] = {2800.0, 20, "2023-02-28"};
+    portfolio["TSLA"] = {700.0, 30, "2023-03-10"};
+
+    // Display current portfolio
+    cout << "Current Portfolio:\n";
+    for (const auto& pair : portfolio) {
+        cout << pair.first << ": $" << pair.second.currentPrice << " (Qty: " << pair.second.quantityOwned << ")\n";
+    }
+
+    // Update price of a stock
+    portfolio["AAPL"].currentPrice = 155.0;
+
+    // Calculate total portfolio value
+    double totalValue = 0.0;
+    for (const auto& pair : portfolio) {
+        totalValue += pair.second.currentPrice * pair.second.quantityOwned;
+    }
+
+    // Display total portfolio value
+    cout << "\nTotal Portfolio Value: $" << totalValue << endl;
+
+    return 0;
+}
+
+
+"""
+EXPLANATION OF THE CODE
+
+The program starts by creating a map named portfolio where the key is a string (stock symbol) and the value is a Stock struct containing currentPrice, quantityOwned, and purchaseDate.
+Initial stocks (AAPL, GOOGL, TSLA) with their respective details (price, quantity, purchase date) are added to the portfolio.
+It then iterates through the portfolio map to display each stock's symbol, current price, and quantity owned.
+The program updates the price of AAPL stock.
+Finally, it calculates the total value of the portfolio by multiplying each stock's current price with its quantity owned and sums them up.
+The total portfolio value is displayed.
+"""
+
+
+"""
+NOTIONS COVERED
+
+STL Associative containers (map)
+Behavior and API of map
+Putting objects into map
+"""
