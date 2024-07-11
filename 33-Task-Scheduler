@@ -1,0 +1,67 @@
+// Task Scheduler Program
+// This program schedules tasks by partitioning them based on priority using stable_partition.
+
+#include <iostream>
+#include <vector>
+#include <algorithm> // for stable_partition
+#include <string>
+
+// Define a Task structure to store task information
+struct Task {
+    std::string name; // Name of the task
+    int priority;     // Priority of the task (1 for high, 0 for low)
+};
+
+// Function to print tasks
+void printTasks(const std::vector<Task>& tasks) {
+    for(const auto& task : tasks) {
+        std::cout << "Task: " << task.name << ", Priority: " << task.priority << std::endl;
+    }
+}
+
+// Main function
+int main() {
+    // Create a vector of tasks
+    std::vector<Task> tasks = {
+        {"Complete report", 1},
+        {"Email client", 0},
+        {"Prepare presentation", 1},
+        {"File taxes", 0},
+        {"Book flight tickets", 0}
+    };
+
+    // Print the initial list of tasks
+    std::cout << "Initial list of tasks:" << std::endl;
+    printTasks(tasks);
+    std::cout << std::endl;
+
+    // Use stable_partition to separate high-priority and low-priority tasks
+    auto it = std::stable_partition(tasks.begin(), tasks.end(), [](const Task& task) {
+        return task.priority == 1; // Return true if task has high priority
+    });
+
+    // Print the partitioned list of tasks
+    std::cout << "Partitioned list of tasks:" << std::endl;
+    printTasks(tasks);
+
+    return 0;
+}
+
+
+"""
+EXPLANATION OF THE CODE
+
+Load the necessary libraries and create a Task structure to hold task information.
+Define a printTasks function to display the tasks.
+Initialize a vector of tasks with different priorities.
+Print the initial list of tasks.
+Use stable_partition to separate tasks into high-priority and low-priority groups.
+Print the partitioned list of tasks.
+"""
+
+
+"""
+NOTIONS COVERED
+
+stable_partition to separate tasks based on their priority.
+"""
