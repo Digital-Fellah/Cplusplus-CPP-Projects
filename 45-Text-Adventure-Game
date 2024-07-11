@@ -1,0 +1,110 @@
+// A simple text-based adventure game where the player navigates through different scenarios
+// The game uses STL utilities and functional library to manage game states and logic
+
+#include <iostream>
+#include <vector>
+#include <map>
+#include <string>
+#include <functional>
+
+// Define a structure for a Room
+struct Room {
+    std::string description;
+    std::map<std::string, std::function<int()>> choices;
+};
+
+// Function prototypes
+int exploreKitchen();
+int exploreLibrary();
+int gameOver();
+void playGame();
+
+// Global variable to keep track of current room index
+int currentRoomIndex = 0;
+
+// Define rooms using STL containers
+std::vector<Room> rooms = {
+    {"You are in the foyer of a haunted mansion. Where would you like to go?", 
+        {{"Kitchen", exploreKitchen}, {"Library", exploreLibrary}}},
+    {"You are in the kitchen. It looks abandoned. What would you like to do?", 
+        {{"Return to Foyer", []() { return 0; }}, {"Explore Further", gameOver}}},
+    {"You are in the library. Dusty books line the shelves. What would you like to do?", 
+        {{"Return to Foyer", []() { return 0; }}, {"Read a Book", gameOver}}}
+};
+
+// Function to handle exploring the kitchen
+int exploreKitchen() {
+    currentRoomIndex = 1; // Set current room to kitchen
+    return currentRoomIndex;
+}
+
+// Function to handle exploring the library
+int exploreLibrary() {
+    currentRoomIndex = 2; // Set current room to library
+    return currentRoomIndex;
+}
+
+// Function to handle game over scenario
+int gameOver() {
+    std::cout << "A ghost catches you! Game Over." << std::endl;
+    return -1; // Return -1 to indicate game over
+}
+
+// Function to play the game
+void playGame() {
+    while (true) {
+        // Get the current room
+        Room currentRoom = rooms[currentRoomIndex];
+
+        // Display the room description
+        std::cout << currentRoom.description << std::endl;
+
+        // Display the choices available in the current room
+        for (const auto& choice : currentRoom.choices) {
+            std::cout << "- " << choice.first << std::endl;
+        }
+
+        // Get the player's choice
+        std::string playerChoice;
+        std::getline(std::cin, playerChoice);
+
+        // Check if the choice is valid
+        if (currentRoom.choices.find(playerChoice) != currentRoom.choices.end()) {
+            // Execute the function associated with the choice
+            int result = currentRoom.choices[playerChoice]();
+            if (result == -1) {
+                break; // Exit the game loop if game over
+            }
+        } else {
+            std::cout << "Invalid choice, please try again." << std::endl;
+        }
+    }
+}
+
+int main() {
+    // Start the game
+    playGame();
+    return 0;
+}
+
+
+"""
+EXPLANATION OF THE CODE
+
+The code starts with including necessary headers and defining the Room structure.
+Prototypes for the functions that manage different rooms and game states are declared.
+A global variable currentRoomIndex is used to track the player's current location.
+The rooms vector is defined using STL containers to hold the different room descriptions and choices.
+Individual functions handle the logic for exploring different rooms and game over scenarios.
+The playGame function contains the main game loop, displaying room descriptions, handling player choices, and managing game states.
+The main function initiates the game by calling playGame.
+"""
+
+
+"""
+NOTIONS COVERED
+
+STL utilities: std::vector, std::map, std::string
+Functional library: std::function
+Basic game logic using functional programming concepts and STL containers to manage game state and player interactions
+"""
