@@ -1,0 +1,139 @@
+// Personal Finance Tracker
+// This program helps users track their personal finances by allowing them to add, view, and manage transactions.
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <iomanip>
+
+using namespace std;
+
+// Define a class to represent a transaction
+class Transaction {
+private:
+    string description;
+    double amount;
+public:
+    // Constructor to initialize transaction with description and amount
+    Transaction(string desc, double amt) {
+        description = desc;
+        amount = amt;
+    }
+
+    // Function to display transaction details
+    void display() {
+        cout << setw(20) << left << description << " $" << setw(10) << right << fixed << setprecision(2) << amount << endl;
+    }
+
+    // Function to get transaction amount
+    double getAmount() {
+        return amount;
+    }
+};
+
+// Function to display menu options
+void displayMenu() {
+    cout << "Personal Finance Tracker" << endl;
+    cout << "1. Add Transaction" << endl;
+    cout << "2. View Transactions" << endl;
+    cout << "3. Exit" << endl;
+    cout << "Enter your choice: ";
+}
+
+// Function to add a new transaction to file
+void addTransaction() {
+    string desc;
+    double amt;
+
+    // Prompt user for transaction details
+    cout << "Enter transaction description: ";
+    cin.ignore();
+    getline(cin, desc);
+    cout << "Enter transaction amount: $";
+    cin >> amt;
+
+    // Open file in append mode and write transaction details
+    ofstream outfile("transactions.txt", ios::app);
+    if (outfile.is_open()) {
+        outfile << desc << "," << amt << endl;
+        outfile.close();
+        cout << "Transaction added successfully!" << endl;
+    } else {
+        cout << "Error: Unable to open file!" << endl;
+    }
+}
+
+// Function to view all transactions from file
+void viewTransactions() {
+    string line;
+    ifstream infile("transactions.txt");
+
+    // Display header
+    cout << setw(20) << left << "Description" << setw(10) << right << "Amount" << endl;
+    cout << setfill('-') << setw(30) << "-" << setfill(' ') << endl;
+
+    // Read and display each transaction from file
+    if (infile.is_open()) {
+        while (getline(infile, line)) {
+            string desc;
+            double amt;
+            size_t pos = line.find(",");
+            if (pos != string::npos) {
+                desc = line.substr(0, pos);
+                amt = stod(line.substr(pos + 1));
+                Transaction t(desc, amt);
+                t.display();
+            }
+        }
+        infile.close();
+    } else {
+        cout << "No transactions found or error reading file!" << endl;
+    }
+}
+
+int main() {
+    int choice;
+
+    // Display menu until user chooses to exit
+    do {
+        displayMenu();
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                addTransaction();
+                break;
+            case 2:
+                viewTransactions();
+                break;
+            case 3:
+                cout << "Exiting program." << endl;
+                break;
+            default:
+                cout << "Invalid choice! Please try again." << endl;
+        }
+    } while (choice != 3);
+
+    return 0;
+}
+
+
+"""
+EXPLANATION OF THE CODE
+
+Introduction: This program helps users track their personal finances by managing transactions stored in a text file.
+Transaction Class: Defines a class Transaction to represent each transaction with description and amount.
+displayMenu Function: Displays a menu of options (Add Transaction, View Transactions, Exit).
+addTransaction Function: Prompts the user to enter a transaction description and amount, then appends it to a file named transactions.txt.
+viewTransactions Function: Reads transactions from transactions.txt and displays them in a formatted table.
+main Function: Implements the main control flow using a menu-driven approach to add transactions, view transactions, or exit the program.
+"""
+
+
+"""
+NOTIONS COVERED
+
+Console I/O
+File I/O
+Classes
+"""
