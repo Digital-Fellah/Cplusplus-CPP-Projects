@@ -1,0 +1,58 @@
+// Recipe Ingredient Checker
+// This program checks if all the required ingredients for a recipe are available.
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+// Function to check if a recipe can be made with available ingredients
+bool canMakeRecipe(const vector<string>& requiredIngredients, const vector<string>& availableIngredients) {
+    // Sort both vectors to use std::merge
+    vector<string> required = requiredIngredients;
+    vector<string> available = availableIngredients;
+    sort(required.begin(), required.end());
+    sort(available.begin(), available.end());
+
+    // Perform merge to find common ingredients
+    vector<string> commonIngredients;
+    merge(required.begin(), required.end(), available.begin(), available.end(), back_inserter(commonIngredients));
+
+    // If the number of common ingredients matches the required ingredients, recipe can be made
+    return commonIngredients.size() == requiredIngredients.size();
+}
+
+int main() {
+    // Example usage
+    vector<string> requiredIngredients = {"flour", "sugar", "eggs", "butter"};
+    vector<string> availableIngredients = {"sugar", "butter", "chocolate", "flour"};
+
+    // Check if recipe can be made
+    if (canMakeRecipe(requiredIngredients, availableIngredients)) {
+        cout << "You can make the recipe!" << endl;
+    } else {
+        cout << "You are missing some ingredients." << endl;
+    }
+
+    return 0;
+}
+
+
+"""
+EXPLANATION OF THE CODE
+
+Header Comments: Provides a brief description of the program.
+Main Function: Contains the logic to check if a recipe can be made with available ingredients.
+Sorting: Both requiredIngredients and availableIngredients vectors are sorted using std::sort.
+Merging: std::merge is used to find common ingredients between requiredIngredients and availableIngredients.
+Comparison: Checks if the number of common ingredients matches the size of requiredIngredients to determine if the recipe can be made.
+"""
+
+
+"""
+NOTIONS COVERED
+
+STL merge operations (merge)
+Container compatibility
+"""
