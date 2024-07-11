@@ -1,0 +1,134 @@
+// Grocery List Manager
+// This program allows users to manage their grocery list, including adding, removing, and viewing items.
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+// Define a struct to represent an item in the grocery list
+struct GroceryItem {
+    string name;
+    int quantity;
+};
+
+// Function to display the menu options
+void displayMenu() {
+    cout << "=== Grocery List Manager ===" << endl;
+    cout << "1. Add an item" << endl;
+    cout << "2. Remove an item" << endl;
+    cout << "3. View the list" << endl;
+    cout << "4. Save and quit" << endl;
+    cout << "===========================" << endl;
+    cout << "Enter your choice: ";
+}
+
+// Function to add a new item to the grocery list
+void addItem(vector<GroceryItem>& list) {
+    GroceryItem newItem;
+    cout << "Enter the name of the item: ";
+    cin >> newItem.name;
+    cout << "Enter the quantity: ";
+    cin >> newItem.quantity;
+    list.push_back(newItem);
+    cout << newItem.name << " added to the list." << endl;
+}
+
+// Function to remove an item from the grocery list
+void removeItem(vector<GroceryItem>& list) {
+    if (list.empty()) {
+        cout << "The list is empty." << endl;
+        return;
+    }
+
+    cout << "Enter the index of the item to remove (1-" << list.size() << "): ";
+    int index;
+    cin >> index;
+
+    if (index < 1 || index > list.size()) {
+        cout << "Invalid index. No item removed." << endl;
+    } else {
+        cout << list[index - 1].name << " removed from the list." << endl;
+        list.erase(list.begin() + index - 1);
+    }
+}
+
+// Function to display the current grocery list
+void viewList(const vector<GroceryItem>& list) {
+    if (list.empty()) {
+        cout << "The list is empty." << endl;
+    } else {
+        cout << "=== Grocery List ===" << endl;
+        for (size_t i = 0; i < list.size(); ++i) {
+            cout << i + 1 << ". " << list[i].name << " - Quantity: " << list[i].quantity << endl;
+        }
+        cout << "=====================" << endl;
+    }
+}
+
+// Function to save the current grocery list to a file
+void saveList(const vector<GroceryItem>& list, const string& filename) {
+    ofstream outFile(filename);
+
+    if (!outFile) {
+        cerr << "Error: Failed to open the file." << endl;
+        return;
+    }
+
+    for (const auto& item : list) {
+        outFile << item.name << "," << item.quantity << endl;
+    }
+
+    outFile.close();
+    cout << "Grocery list saved to " << filename << "." << endl;
+}
+
+int main() {
+    vector<GroceryItem> groceryList;
+    string filename = "grocery_list.txt"; // File to store the grocery list
+
+    int choice;
+    do {
+        displayMenu();
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                addItem(groceryList);
+                break;
+            case 2:
+                removeItem(groceryList);
+                break;
+            case 3:
+                viewList(groceryList);
+                break;
+            case 4:
+                saveList(groceryList, filename);
+                break;
+            default:
+                cout << "Invalid choice. Please enter a number between 1 and 4." << endl;
+        }
+    } while (choice != 4);
+
+    return 0;
+}
+
+
+"""
+EXPLANATION OF THE CODE
+
+The program starts by defining a GroceryItem struct to represent items in the grocery list.
+Functions like displayMenu, addItem, removeItem, viewList, and saveList handle different aspects of managing the grocery list.
+The main function runs a loop that displays a menu and processes user input based on their choice.
+"""
+
+
+"""
+NOTIONS COVERED
+
+File I/O: Reading from and writing to a file (saveList function).
+Classes (for data structure): GroceryItem struct is used to encapsulate item details.
+Strings I/O: Input and output operations involving strings (name of GroceryItem).
+"""
