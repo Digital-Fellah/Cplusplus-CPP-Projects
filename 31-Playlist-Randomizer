@@ -1,0 +1,108 @@
+/*
+    Playlist Randomizer
+
+    This program loads a playlist from a file, shuffles the order of songs,
+    and saves the shuffled playlist back to a file.
+
+    Steps:
+    1. Include necessary headers: iostream, fstream, algorithm.
+    2. Define a function to read the playlist from a file into a vector.
+    3. Define a function to shuffle the playlist using random_shuffle.
+    4. Define a function to write the shuffled playlist back to a file.
+    5. Implement main function to orchestrate the flow of operations.
+
+    Example:
+    If the input file "playlist.txt" contains:
+    Song1
+    Song2
+    Song3
+
+    After shuffling and saving, it might become:
+    Song3
+    Song1
+    Song2
+*/
+
+#include <iostream>
+#include <fstream>
+#include <algorithm>
+#include <vector>
+#include <cstdlib>  // For rand and srand
+#include <ctime>    // For time
+
+using namespace std;
+
+// Function to read playlist from a file into a vector
+vector<string> readPlaylist(const string& filename) {
+    vector<string> playlist;
+    ifstream file(filename);
+    string song;
+
+    if (file.is_open()) {
+        while (getline(file, song)) {
+            playlist.push_back(song);
+        }
+        file.close();
+    } else {
+        cout << "Unable to open file: " << filename << endl;
+    }
+
+    return playlist;
+}
+
+// Function to shuffle playlist using random_shuffle
+void shufflePlaylist(vector<string>& playlist) {
+    srand(static_cast<unsigned int>(time(nullptr)));  // Seed the random number generator
+    random_shuffle(playlist.begin(), playlist.end());
+}
+
+// Function to write shuffled playlist back to a file
+void writePlaylist(const vector<string>& playlist, const string& filename) {
+    ofstream file(filename);
+
+    if (file.is_open()) {
+        for (const auto& song : playlist) {
+            file << song << endl;
+        }
+        file.close();
+        cout << "Shuffled playlist saved to " << filename << endl;
+    } else {
+        cout << "Unable to open file: " << filename << " for writing" << endl;
+    }
+}
+
+int main() {
+    string inputFileName = "playlist.txt";
+    string outputFileName = "shuffled_playlist.txt";
+
+    // Read playlist from file
+    vector<string> playlist = readPlaylist(inputFileName);
+
+    // Shuffle playlist
+    shufflePlaylist(playlist);
+
+    // Write shuffled playlist back to file
+    writePlaylist(playlist, outputFileName);
+
+    return 0;
+}
+
+
+
+"""
+EXPLANATION OF THE CODE
+
+The program reads a list of songs from a file, shuffles them, and then saves the shuffled list back to a file.
+readPlaylist(filename): Reads each song from the specified file into a vector.
+shufflePlaylist(playlist): Uses random_shuffle to randomize the order of songs in the playlist vector.
+writePlaylist(playlist, filename): Writes each song from the shuffled playlist vector back to a specified file.
+"""
+
+
+"""
+NOTIONS COVERED
+
+random_shuffle: Used to randomly shuffle the elements in a container.
+File handling (ifstream, ofstream): Used to read from and write to files in C++.
+Vectors: Used as a container to store and manipulate the playlist of songs.
+"""
