@@ -49,10 +49,10 @@ Sorting STL operations
 
 
 STL merge operations
-List of merging algorithms: merge, includes, min_element, max_element, inplace_merge
-STL operations for sets
-Examples
-Container compatibility
+- List of merging algorithms: merge, includes, min_element, max_element, inplace_merge
+- STL operations for sets
+- Examples
+- Container compatibility
 
 
 STL utilities and functional library
