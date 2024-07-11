@@ -1,0 +1,52 @@
+// This program analyzes student grades stored in a vector and calculates statistics.
+
+#include <iostream>
+#include <vector>
+#include <algorithm> // for STL algorithms
+#include <numeric>   // for accumulate
+
+using namespace std;
+
+int main() {
+    // Sample student grades
+    vector<int> grades = {85, 92, 78, 90, 60, 70, 88, 82, 95, 42};
+
+    // Calculate the total number of grades
+    int num_grades = grades.size();
+
+    // Calculate the average grade
+    double average_grade = accumulate(grades.begin(), grades.end(), 0.0) / num_grades;
+
+    // Count the number of failing grades (below 70)
+    int num_failures = count_if(grades.begin(), grades.end(), [](int grade) {
+        return grade < 70;
+    });
+
+    // Display results
+    cout << "=== Student Grade Analyzer ===" << endl;
+    cout << "Total number of grades: " << num_grades << endl;
+    cout << "Average grade: " << average_grade << endl;
+    cout << "Number of failing grades (below 70): " << num_failures << endl;
+
+    return 0;
+}
+
+
+"""
+EXPLANATION OF THE CODE
+
+Sample student grades: Initializes a vector grades with sample integer grades.
+Calculate the total number of grades: Uses size() method of vector to determine the number of grades.
+Calculate the average grade: Utilizes accumulate() from <numeric> to sum all grades and then divide by the number of grades.
+Count the number of failing grades: Uses count_if() from <algorithm> to count how many grades are below 70.
+Display results: Outputs the total number of grades, average grade, and number of failing grades to the console.
+"""
+
+
+"""
+NOTIONS COVERED
+
+for_each: Not used explicitly in this project.
+count: Used to count the total number of grades.
+count_if: Used to count the number of failing grades.
+"""
