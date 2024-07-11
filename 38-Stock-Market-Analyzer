@@ -1,0 +1,55 @@
+// Stock Market Analyzer
+// This program analyzes historical stock prices to find the minimum and maximum prices.
+
+#include <iostream>
+#include <vector>
+#include <algorithm> // for std::min_element, std::max_element
+
+int main() {
+    // Sample historical stock prices
+    std::vector<double> stock_prices = {112.50, 115.20, 110.80, 118.65, 114.30};
+
+    // Find the minimum stock price
+    auto min_price_iter = std::min_element(stock_prices.begin(), stock_prices.end());
+    double min_price = *min_price_iter;
+
+    // Find the maximum stock price
+    auto max_price_iter = std::max_element(stock_prices.begin(), stock_prices.end());
+    double max_price = *max_price_iter;
+
+    // Output results
+    std::cout << "Historical Stock Prices:\n";
+    for (auto price : stock_prices) {
+        std::cout << price << " ";
+    }
+    std::cout << "\n\n";
+
+    std::cout << "Minimum Price: " << min_price << "\n";
+    std::cout << "Maximum Price: " << max_price << "\n";
+
+    return 0;
+}
+
+
+"""
+EXPLANATION OF THE CODE
+
+Introduction: The program analyzes historical stock prices to find the minimum and maximum prices.
+Vector Initialization: Initializes a vector stock_prices with sample historical stock prices.
+Finding Minimum Price:
+Uses std::min_element to find the iterator pointing to the smallest element in stock_prices.
+Dereferences the iterator to get the actual minimum price value.
+Finding Maximum Price:
+Uses std::max_element to find the iterator pointing to the largest element in stock_prices.
+Dereferences the iterator to get the actual maximum price value.
+Output Results:
+Displays the entire list of historical stock prices.
+Prints the minimum and maximum prices found.
+"""
+
+
+"""
+NOTIONS COVERED
+
+STL operations for sets (min_element, max_element)
+"""
