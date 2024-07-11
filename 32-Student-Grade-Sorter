@@ -1,0 +1,57 @@
+// This program sorts student grades in ascending order using the sort function from the C++ Standard Library.
+// It demonstrates how to store student grades and sort them in a simple and clear way.
+
+#include <iostream>  // for input and output
+#include <vector>    // for the vector container
+#include <algorithm> // for the sort function
+
+// Structure to represent a student with a name and a grade
+struct Student {
+    std::string name;
+    int grade;
+};
+
+// Main function
+int main() {
+    // Creating a vector of Student structures to store the list of students
+    std::vector<Student> students = {
+        {"Alice", 88},
+        {"Bob", 95},
+        {"Charlie", 70},
+        {"Diana", 85}
+    };
+
+    // Sorting the students vector by grade in ascending order
+    std::sort(students.begin(), students.end(), [](const Student &a, const Student &b) {
+        return a.grade < b.grade;  // Compare the grades of two students
+    });
+
+    // Printing the sorted list of students
+    std::cout << "Sorted list of students by grade:" << std::endl;
+    for (const auto &student : students) {
+        std::cout << student.name << ": " << student.grade << std::endl;
+    }
+
+    return 0; // Indicate that the program ended successfully
+}
+
+
+"""
+EXPLANATION OF THE CODE
+
+The program begins with importing necessary libraries.
+A Student struct is defined to store the name and grade of each student.
+A vector of Student objects is created to hold the list of students and their grades.
+The std::sort function is used to sort the vector in ascending order based on the grades.
+A lambda function is used to define the comparison logic for sorting.
+The sorted list of students is printed to the console.
+"""
+
+
+"""
+NOTIONS COVERED
+
+sort function from the C++ Standard Library
+Sorting elements in a vector
+Using lambda functions for custom sorting criteria
+"""
