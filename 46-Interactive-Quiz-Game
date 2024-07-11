@@ -1,0 +1,105 @@
+// Project 46: Interactive Quiz Game
+// This program implements an interactive quiz game where questions are read from a file and users can answer them.
+
+#include <iostream>
+#include <fstream> // For file I/O
+#include <vector>
+#include <string>
+
+using namespace std;
+
+// Function to display the quiz questions and get user answers
+void runQuiz(const string& filename) {
+    ifstream file(filename); // Open the file for reading
+    
+    if (!file.is_open()) { // Check if the file opened successfully
+        cerr << "Error opening file: " << filename << endl;
+        return;
+    }
+    
+    string question;
+    vector<string> options;
+    string correctAnswer;
+    string userAnswer;
+    int questionNumber = 1;
+    int score = 0;
+    
+    while (getline(file, question)) { // Read questions line by line
+        options.clear(); // Clear previous options
+        
+        // Read options
+        string line;
+        getline(file, line);
+        size_t pos = line.find("CorrectAnswer:");
+        
+        // Split options
+        string optionsPart = line.substr(0, pos);
+        string correctPart = line.substr(pos + 14); // Length of "CorrectAnswer:"
+        
+        // Parse options
+        size_t start = 0;
+        while ((pos = optionsPart.find(',', start)) != string::npos) {
+            options.push_back(optionsPart.substr(start, pos - start));
+            start = pos + 1;
+        }
+        options.push_back(optionsPart.substr(start)); // Last option
+        
+        // Get correct answer
+        correctAnswer = correctPart;
+        
+        // Display question
+        cout << "Question " << questionNumber << ": " << question << endl;
+        
+        // Display options
+        for (size_t i = 0; i < options.size(); ++i) {
+            cout << i + 1 << ". " << options[i] << endl;
+        }
+        
+        // Get user answer
+        cout << "Your answer: ";
+        getline(cin, userAnswer);
+        
+        // Check if answer is correct
+        if (userAnswer == correctAnswer) {
+            cout << "Correct!" << endl;
+            score++;
+        } else {
+            cout << "Incorrect. The correct answer was: " << correctAnswer << endl;
+        }
+        
+        cout << endl;
+        questionNumber++;
+    }
+    
+    // Display final score
+    cout << "Quiz ended. Your score: " << score << "/" << questionNumber - 1 << endl;
+    
+    file.close(); // Close the file
+}
+
+int main() {
+    string filename = "quiz_questions.txt"; // Replace with your quiz file name
+    runQuiz(filename); // Run the quiz
+    
+    return 0;
+}
+
+
+"""
+EXPLANATION OF THE CODE
+
+The program starts by opening a file (quiz_questions.txt) containing quiz questions and answers.
+Each question and its options are read from the file.
+The user is prompted to answer each question interactively through the console.
+The program checks the user's answer against the correct answer and keeps track of the score.
+Finally, the program displays the user's score after all questions have been answered.
+"""
+
+
+"""
+NOTIONS COVERED
+
+Console I/O: Interacting with the user through the console to display questions and receive answers.
+File I/O: Reading quiz questions and answers from a text file (quiz_questions.txt).
+Strings I/O: Manipulating strings to parse questions, options, and correct answers from the file.
+"""
