@@ -1,0 +1,73 @@
+// Library Book Sorting Program
+// This program sorts books by their title using custom sorting functions
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+// Book class definition
+class Book {
+public:
+    std::string title;
+    std::string author;
+    int publicationYear;
+
+    // Constructor to initialize a book
+    Book(std::string t, std::string a, int y) : title(t), author(a), publicationYear(y) {}
+};
+
+// Function to print the list of books
+void printBooks(const std::vector<Book>& books) {
+    for (const auto& book : books) {
+        std::cout << book.title << " by " << book.author << " (" << book.publicationYear << ")" << std::endl;
+    }
+}
+
+// Custom sorting function to sort books by title
+bool compareByTitle(const Book& a, const Book& b) {
+    return a.title < b.title;
+}
+
+int main() {
+    // Create a list (vector) of books
+    std::vector<Book> library = {
+        Book("The Catcher in the Rye", "J.D. Salinger", 1951),
+        Book("To Kill a Mockingbird", "Harper Lee", 1960),
+        Book("1984", "George Orwell", 1949),
+        Book("Moby-Dick", "Herman Melville", 1851)
+    };
+
+    // Print books before sorting
+    std::cout << "Books before sorting:\n";
+    printBooks(library);
+
+    // Sort books by title using the custom compareByTitle function
+    std::sort(library.begin(), library.end(), compareByTitle);
+
+    // Print books after sorting
+    std::cout << "\nBooks after sorting by title:\n";
+    printBooks(library);
+
+    return 0;
+}
+
+
+"""
+EXPLANATION OF THE CODE
+
+Define a Book class with title, author, and publicationYear attributes and a constructor.
+Implement a printBooks function to display the list of books.
+Define a compareByTitle function to compare two books by their title.
+Create a main function to:
+Initialize a vector of Book objects (library).
+Print the list of books before sorting.
+Sort the list of books by title using std::sort with compareByTitle.
+Print the list of books after sorting.
+"""
+
+
+"""
+NOTIONS COVERED
+
+Sorting of objects using custom functions (std::sort with a custom comparator).
+"""
