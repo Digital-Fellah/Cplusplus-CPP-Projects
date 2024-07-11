@@ -1,0 +1,51 @@
+// Shopping Cart Optimizer
+// This program optimizes a shopping cart by partitioning items based on priority.
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+// Function to print items in a vector
+void printItems(const std::vector<std::string>& items) {
+    for (const auto& item : items) {
+        std::cout << item << std::endl;
+    }
+}
+
+int main() {
+    // Sample list of shopping items
+    std::vector<std::string> shoppingCart = {"Apple", "Milk", "Bread", "Steak", "Tomato", "Eggs"};
+
+    // Partition the shopping cart based on perishable items (e.g., "Milk", "Tomato", "Eggs")
+    auto partitionIter = std::partition(shoppingCart.begin(), shoppingCart.end(), 
+                                        [](const std::string& item) {
+                                            return item == "Milk" || item == "Tomato" || item == "Eggs";
+                                        });
+
+    // Display non-perishable items (e.g., "Apple", "Bread", "Steak")
+    std::cout << "Non-perishable items:" << std::endl;
+    printItems(std::vector<std::string>(shoppingCart.begin(), partitionIter));
+
+    // Display perishable items (e.g., "Milk", "Tomato", "Eggs")
+    std::cout << "\nPerishable items:" << std::endl;
+    printItems(std::vector<std::string>(partitionIter, shoppingCart.end()));
+
+    return 0;
+}
+
+
+"""
+EXPLANATION OF THE CODE
+
+Initializes a shopping cart vector with sample items.
+Uses std::partition to divide the items into two groups based on whether they are perishable ("Milk", "Tomato", "Eggs").
+Prints out non-perishable and perishable items separately using a helper function printItems.
+"""
+
+
+"""
+NOTIONS COVERED
+
+partition: Divides the range of elements in a container into two groups based on a condition.
+printItems: Helper function to print elements of a vector.
+"""
