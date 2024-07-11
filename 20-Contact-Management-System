@@ -1,0 +1,73 @@
+// Contact Management System
+// This program manages contacts using a multimap where last names serve as keys.
+
+#include <iostream>
+#include <map>
+#include <string>
+
+using namespace std;
+
+// Define a structure to hold contact information
+struct Contact {
+    string firstName;
+    string phoneNumber;
+    string email;
+    string address;
+};
+
+int main() {
+    // Define a multimap to store contacts, using last name as key and Contact struct as value
+    multimap<string, Contact> contacts;
+
+    // Add some initial contacts to demonstrate functionality
+    contacts.insert({"Smith", {"John", "123-456-7890", "john.smith@example.com", "123 Elm St"}});
+    contacts.insert({"Doe", {"Jane", "987-654-3210", "jane.doe@example.com", "456 Oak Ave"}});
+    contacts.insert({"Doe", {"John", "555-123-4567", "john.doe@example.com", "789 Maple Rd"}}); // Adding another Doe for testing
+
+    // Display all contacts
+    cout << "All Contacts:" << endl;
+    for (auto const& [lastName, contact] : contacts) {
+        cout << "Last Name: " << lastName << endl;
+        cout << "First Name: " << contact.firstName << endl;
+        cout << "Phone Number: " << contact.phoneNumber << endl;
+        cout << "Email: " << contact.email << endl;
+        cout << "Address: " << contact.address << endl << endl;
+    }
+
+    // Search for contacts by last name
+    string searchLastName = "Doe";
+    auto range = contacts.equal_range(searchLastName);
+
+    cout << "Contacts with last name \"" << searchLastName << "\":" << endl;
+    for (auto it = range.first; it != range.second; ++it) {
+        cout << "Last Name: " << it->first << endl;
+        cout << "First Name: " << it->second.firstName << endl;
+        cout << "Phone Number: " << it->second.phoneNumber << endl;
+        cout << "Email: " << it->second.email << endl;
+        cout << "Address: " << it->second.address << endl << endl;
+    }
+
+    return 0;
+}
+
+
+"""
+
+EXPLANATION OF THE CODE
+
+Define a structure Contact to hold details such as first name, phone number, email, and address.
+Initialize a multimap named contacts where the key is string (last name) and the value is Contact.
+Add sample contacts into the contacts multimap for demonstration purposes.
+Print all contacts stored in the multimap, iterating through each pair of last name and contact details.
+Search for contacts by last name "Doe" using equal_range, which returns a pair of iterators pointing to the range of elements with the key "Doe" in the multimap.
+Print details of contacts with the last name "Doe".
+"""
+
+
+"""
+NOTIONS COVERED
+
+STL Associative containers (multimap)
+Behavior and API of multimap
+Putting objects into multimap
+"""
