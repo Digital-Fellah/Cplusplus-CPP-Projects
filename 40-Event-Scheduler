@@ -1,0 +1,58 @@
+// Event Scheduler
+// This program manages events for different types of users, organizing them based on their schedule compatibility.
+
+#include <iostream>
+#include <vector>
+#include <list>
+#include <algorithm>
+
+// Function to print events in a container
+template<typename Container>
+void printEvents(const Container& events) {
+    for (const auto& event : events) {
+        std::cout << "- " << event << std::endl;
+    }
+}
+
+int main() {
+    // Define containers for different types of events
+    std::vector<std::string> personalEvents = {"Exercise", "Cooking", "Reading"};
+    std::list<std::string> workEvents = {"Meeting", "Presentation", "Coding"};
+
+    // Print initial events
+    std::cout << "Personal Events:" << std::endl;
+    printEvents(personalEvents);
+    std::cout << "\nWork Events:" << std::endl;
+    printEvents(workEvents);
+
+    // Merge personal events into work events using std::merge
+    std::list<std::string> allEvents;
+    std::merge(personalEvents.begin(), personalEvents.end(),
+               workEvents.begin(), workEvents.end(),
+               std::back_inserter(allEvents));
+
+    // Print merged events
+    std::cout << "\nAll Events:" << std::endl;
+    printEvents(allEvents);
+
+    return 0;
+}
+
+
+"""
+EXPLANATION OF THE CODE
+
+Introduction: This program manages events for different types of users, merging and organizing them based on their schedule compatibility.
+Define Containers: Separate containers (std::vector for personal events and std::list for work events) are used to store initial events.
+Printing Events: Custom function printEvents is used to print events from a given container.
+Merge Events: std::merge is employed to combine personal and work events into a single sorted list (allEvents).
+Output: Finally, all merged events are printed out.
+"""
+
+
+"""
+NOTIONS COVERED
+
+STL merge operations (merge)
+Container compatibility
+"""
