@@ -1,0 +1,125 @@
+// Recipe Organizer
+// This program allows users to manage recipes using a list container from the STL.
+
+#include <iostream>
+#include <list>
+#include <string>
+
+using namespace std;
+
+// Define a structure to represent a recipe
+struct Recipe {
+    string title;
+    string ingredients;
+    string instructions;
+};
+
+int main() {
+    // Create a list to store recipes
+    list<Recipe> recipeList;
+
+    // Variables for user input
+    string title, ingredients, instructions;
+    char choice;
+
+    do {
+        // Menu for user options
+        cout << "Recipe Organizer Menu:\n";
+        cout << "1. Add a Recipe\n";
+        cout << "2. Remove a Recipe\n";
+        cout << "3. Display All Recipes\n";
+        cout << "4. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case '1': {
+                // Add a new recipe
+                Recipe newRecipe;
+                cin.ignore(); // Clear the newline from previous input
+                cout << "Enter recipe title: ";
+                getline(cin, newRecipe.title);
+                cout << "Enter ingredients (comma-separated): ";
+                getline(cin, newRecipe.ingredients);
+                cout << "Enter instructions: ";
+                getline(cin, newRecipe.instructions);
+
+                // Add the recipe to the list
+                recipeList.push_back(newRecipe);
+
+                cout << "Recipe added!\n";
+                break;
+            }
+            case '2': {
+                // Remove a recipe
+                if (recipeList.empty()) {
+                    cout << "No recipes to remove.\n";
+                } else {
+                    cin.ignore(); // Clear the newline from previous input
+                    string recipeTitle;
+                    cout << "Enter the title of the recipe to remove: ";
+                    getline(cin, recipeTitle);
+
+                    // Search for the recipe by title and remove it
+                    bool found = false;
+                    for (auto it = recipeList.begin(); it != recipeList.end(); ++it) {
+                        if (it->title == recipeTitle) {
+                            recipeList.erase(it);
+                            found = true;
+                            cout << "Recipe removed.\n";
+                            break;
+                        }
+                    }
+
+                    if (!found) {
+                        cout << "Recipe not found.\n";
+                    }
+                }
+                break;
+            }
+            case '3': {
+                // Display all recipes
+                if (recipeList.empty()) {
+                    cout << "No recipes to display.\n";
+                } else {
+                    cout << "All Recipes:\n";
+                    for (const auto &recipe : recipeList) {
+                        cout << "Title: " << recipe.title << endl;
+                        cout << "Ingredients: " << recipe.ingredients << endl;
+                        cout << "Instructions: " << recipe.instructions << endl;
+                        cout << "---------------------\n";
+                    }
+                }
+                break;
+            }
+            case '4':
+                // Exit the program
+                cout << "Exiting...\n";
+                break;
+            default:
+                cout << "Invalid choice. Please enter a valid option.\n";
+        }
+    } while (choice != '4');
+
+    return 0;
+}
+
+
+"""
+EXPLANATION OF THE CODE
+
+The program begins by defining a structure Recipe to store recipe details such as title, ingredients, and instructions.
+A list container from the STL is used to store multiple Recipe objects.
+Inside main(), a menu-driven interface allows users to add recipes (case '1'), remove recipes (case '2'), display all recipes (case '3'), and exit the program (case '4').
+User input is handled using cin and getline() to capture strings for recipe details, ensuring any stray newlines are cleared with cin.ignore() as necessary.
+Operations like adding a recipe (push_back()), removing a recipe by title (erase() within a loop), and displaying all recipes are implemented using appropriate list operations.
+"""
+
+
+"""
+NOTIONS COVERED
+
+STL Sequential Containers (list)
+Types of Sequential Containers
+Dealing with Objects as Container Elements
+"""
