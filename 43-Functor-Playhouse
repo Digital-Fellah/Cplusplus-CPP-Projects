@@ -1,0 +1,73 @@
+// Functor Playhouse
+// Explore different functors in C++ and see how they work
+
+#include <iostream>    // For std::cout and std::endl
+#include <vector>      // For std::vector
+#include <algorithm>   // For std::transform
+#include <functional>  // For std::plus, std::greater
+
+// Define a custom functor that multiplies two numbers
+struct Multiply {
+    int operator()(int a, int b) const {
+        return a * b;
+    }
+};
+
+int main() {
+    // Create a vector of integers
+    std::vector<int> numbers = {1, 2, 3, 4, 5};
+
+    // Create another vector to store the results
+    std::vector<int> results(numbers.size());
+
+    // Using std::transform with std::plus functor to add 10 to each element
+    std::transform(numbers.begin(), numbers.end(), results.begin(), std::bind(std::plus<int>(), std::placeholders::_1, 10));
+
+    // Display the results of addition
+    std::cout << "Results after adding 10:" << std::endl;
+    for(int n : results) {
+        std::cout << n << " ";
+    }
+    std::cout << std::endl;
+
+    // Using std::transform with custom Multiply functor to multiply each element by 2
+    std::transform(numbers.begin(), numbers.end(), results.begin(), std::bind(Multiply(), std::placeholders::_1, 2));
+
+    // Display the results of multiplication
+    std::cout << "Results after multiplying by 2:" << std::endl;
+    for(int n : results) {
+        std::cout << n << " ";
+    }
+    std::cout << std::endl;
+
+    // Using std::greater to compare two numbers
+    std::greater<int> greater_than;
+    int a = 10, b = 20;
+    std::cout << "Is " << a << " greater than " << b << "? " << (greater_than(a, b) ? "Yes" : "No") << std::endl;
+
+    return 0;
+}
+
+
+"""
+EXPLANATION OF THE CODE
+
+Include necessary libraries for input/output, vectors, algorithms, and functional utilities.
+Define a custom functor Multiply that multiplies two numbers.
+Initialize a vector of integers.
+Create another vector to store results.
+Use std::transform with std::plus functor to add 10 to each element in the vector.
+Display the results of the addition operation.
+Use std::transform with custom Multiply functor to multiply each element by 2.
+Display the results of the multiplication operation.
+Use std::greater functor to compare two numbers and display the result.
+"""
+
+
+"""
+NOTIONS COVERED
+
+STL utilities (std::vector, std::transform, std::bind, std::placeholders)
+Functional library (std::plus, std::greater)
+Custom functors (Multiply)
+"""
