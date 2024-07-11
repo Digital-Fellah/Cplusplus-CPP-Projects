@@ -1,0 +1,112 @@
+/*
+  Emoji Replacer
+
+  This program reads a text file, searches for specific words, and replaces them with emojis.
+
+  Steps:
+  1. Open the input text file for reading.
+  2. Open an output file for writing the modified text.
+  3. Define a map or a simple array to store word-to-emoji mappings.
+  4. Loop through each line of the input file.
+  5. For each line, split it into words.
+  6. Check each word against the map of replacements.
+  7. If a word matches a key in the map, replace it with the corresponding emoji.
+  8. Write the modified line to the output file.
+  9. Close both input and output files once all lines have been processed.
+
+  Example:
+  Input:
+  Hello world! I am happy today.
+
+  Output:
+  Hello world! I am 😊 today.
+*/
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <map>
+
+int main() {
+    // Open the input text file
+    std::ifstream inputFile("input.txt");
+    if (!inputFile.is_open()) {
+        std::cerr << "Error opening input file!";
+        return 1;
+    }
+
+    // Open the output text file
+    std::ofstream outputFile("output.txt");
+    if (!outputFile.is_open()) {
+        std::cerr << "Error opening output file!";
+        return 1;
+    }
+
+    // Define a map for word-to-emoji replacements
+    std::map<std::string, std::string> emojiMap = {
+        {"happy", "😊"},
+        {"sad", "😢"},
+        {"love", "❤️"}
+        // Add more mappings as needed
+    };
+
+    std::string line;
+    while (std::getline(inputFile, line)) { // Read each line from input file
+        std::string modifiedLine = "";
+
+        size_t start = 0;
+        size_t end = line.find(" "); // Find the first space to split words
+
+        while (end != std::string::npos) {
+            std::string word = line.substr(start, end - start);
+
+            // Check if the word is in the emoji map
+            if (emojiMap.find(word) != emojiMap.end()) {
+                modifiedLine += emojiMap[word]; // Replace with emoji
+            } else {
+                modifiedLine += word; // Keep the original word
+            }
+
+            modifiedLine += " "; // Add space after each word
+            start = end + 1; // Move start index to the next word
+            end = line.find(" ", start); // Find the next space
+        }
+
+        // Append the last word of the line
+        modifiedLine += line.substr(start);
+
+        // Write the modified line to the output file
+        outputFile << modifiedLine << std::endl;
+    }
+
+    // Close files
+    inputFile.close();
+    outputFile.close();
+
+    std::cout << "Emoji replacement complete. Check 'output.txt' for the result." << std::endl;
+
+    return 0;
+}
+
+
+"""
+EXPLANATION OF THE CODE
+
+Reads a text file line by line.
+Splits each line into words.
+Checks each word against a predefined map of word-to-emoji replacements.
+Replaces words with emojis where a match is found.
+Writes the modified text to an output file.
+"""
+
+
+"""
+NOTIONS COVERED
+
+ifstream for file input.
+ofstream for file output.
+map for storing word-to-emoji mappings.
+getline for reading lines from a file.
+find and substr for manipulating strings.
+<< for outputting data to a file.
+"""
