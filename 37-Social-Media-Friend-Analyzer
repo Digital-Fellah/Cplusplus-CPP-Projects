@@ -1,0 +1,62 @@
+// Project 37: Social Media Friend Analyzer
+// This program analyzes mutual friends between two users on a social media platform.
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <set>
+
+using namespace std;
+
+// Function to find mutual friends using std::includes
+vector<string> findMutualFriends(const vector<string>& user1Friends, const vector<string>& user2Friends) {
+    vector<string> mutualFriends;
+
+    // Sort both friend lists to use std::includes
+    vector<string> sortedUser1 = user1Friends;
+    vector<string> sortedUser2 = user2Friends;
+    sort(sortedUser1.begin(), sortedUser1.end());
+    sort(sortedUser2.begin(), sortedUser2.end());
+
+    // Find intersection using std::includes
+    set_intersection(sortedUser1.begin(), sortedUser1.end(), sortedUser2.begin(), sortedUser2.end(),
+                     back_inserter(mutualFriends));
+
+    return mutualFriends;
+}
+
+int main() {
+    // Example friend lists
+    vector<string> user1Friends = {"Alice", "Bob", "Charlie", "David"};
+    vector<string> user2Friends = {"Bob", "David", "Eve"};
+
+    // Find mutual friends
+    vector<string> mutualFriends = findMutualFriends(user1Friends, user2Friends);
+
+    // Display mutual friends
+    cout << "Mutual Friends: ";
+    for (const string& friendName : mutualFriends) {
+        cout << friendName << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
+
+
+
+"""
+EXPLANATION OF THE CODE
+
+The program defines a function findMutualFriends to find common friends between two users.
+Inside findMutualFriends, the input friend lists are sorted to prepare for the std::includes function.
+std::set_intersection is used to find common elements between the sorted lists.
+The main function initializes example friend lists, calls findMutualFriends to compute mutual friends, and prints the results.
+"""
+
+
+"""
+NOTIONS COVERED
+
+std::includes: Used to check if one sorted range contains another.
+"""
