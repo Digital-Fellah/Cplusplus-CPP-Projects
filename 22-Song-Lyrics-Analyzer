@@ -1,0 +1,52 @@
+// Project: Song Lyrics Analyzer
+// Description: This program compares two versions of song lyrics to find differences and similarities.
+
+#include <iostream>
+#include <vector>
+#include <algorithm> // for mismatch and equal
+
+int main() {
+    // Define two sets of lyrics (text parts not included in code)
+    std::vector<std::string> lyrics1 = {"Lyrics version 1 goes here"};
+    std::vector<std::string> lyrics2 = {"Lyrics version 2 goes here"};
+
+    // Compare the lyrics using mismatch
+    auto mismatchResult = std::mismatch(lyrics1.begin(), lyrics1.end(), lyrics2.begin());
+
+    // Check if there is a mismatch
+    if (mismatchResult.first == lyrics1.end() && mismatchResult.second == lyrics2.end()) {
+        std::cout << "Lyrics are identical.\n";
+    } else {
+        std::cout << "Lyrics are different.\n";
+        std::cout << "First difference found at: \n";
+        std::cout << "Version 1: " << *mismatchResult.first << "\n";
+        std::cout << "Version 2: " << *mismatchResult.second << "\n";
+    }
+
+    // Check if the lyrics are completely equal using equal
+    bool areEqual = std::equal(lyrics1.begin(), lyrics1.end(), lyrics2.begin());
+
+    if (areEqual) {
+        std::cout << "Lyrics are exactly the same.\n";
+    } else {
+        std::cout << "Lyrics are not exactly the same.\n";
+    }
+
+    return 0;
+}
+
+
+"""
+EXPLANATION OF THE CODE
+
+Define two vectors (lyrics1 and lyrics2) to store the lyrics of two versions of a song.
+Use std::mismatch to find the first point of difference between lyrics1 and lyrics2.
+Check the result of mismatch to determine if the lyrics are identical or where the first difference occurs.
+Use std::equal to verify if the entire content of lyrics1 matches lyrics2.
+"""
+
+
+"""
+mismatch: Compares two sequences and returns the first point where they differ.
+equal: Checks if two sequences are identical.
+"""
