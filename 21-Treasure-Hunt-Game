@@ -1,0 +1,91 @@
+// Treasure Hunt Game
+// A simple text-based game where the player hunts for treasures on a grid.
+
+#include <iostream>
+#include <vector>
+#include <algorithm>  // for STL algorithms
+#include <cstdlib>    // for random number generation
+#include <ctime>      // for seeding random number generator
+
+using namespace std;
+
+// Function to print the grid (2D vector)
+void printGrid(const vector<vector<char>>& grid) {
+    for (const auto& row : grid) {
+        for (char cell : row) {
+            cout << cell << " ";
+        }
+        cout << endl;
+    }
+}
+
+int main() {
+    // Seed the random number generator
+    srand(static_cast<unsigned int>(time(nullptr)));
+
+    // Define constants
+    const int gridSize = 5;
+    const char emptyCell = '.';
+    const char treasureCell = 'T';
+    const char obstacleCell = 'X';
+
+    // Initialize the grid
+    vector<vector<char>> grid(gridSize, vector<char>(gridSize, emptyCell));
+
+    // Place treasures randomly on the grid
+    for (int i = 0; i < gridSize; ++i) {
+        int row = rand() % gridSize;
+        int col = rand() % gridSize;
+        grid[row][col] = treasureCell;
+    }
+
+    // Place obstacles randomly on the grid
+    for (int i = 0; i < gridSize; ++i) {
+        int row = rand() % gridSize;
+        int col = rand() % gridSize;
+        // Ensure obstacles are not placed on top of treasures
+        if (grid[row][col] != treasureCell) {
+            grid[row][col] = obstacleCell;
+        }
+    }
+
+    // Print the initial grid
+    cout << "Welcome to the Treasure Hunt Game!" << endl;
+    cout << "Legend:" << endl;
+    cout << ". = Empty cell" << endl;
+    cout << "T = Treasure" << endl;
+    cout << "X = Obstacle" << endl;
+    cout << "Here's your treasure map:" << endl;
+    printGrid(grid);
+
+    // Example of using non-modifying algorithms:
+    // Count treasures on the grid
+    int numTreasures = count_if(grid.begin(), grid.end(), [](const vector<char>& row) {
+        return find(row.begin(), row.end(), 'T') != row.end();
+    });
+
+    // Output the number of treasures found
+    cout << "Number of treasures on the map: " << numTreasures << endl;
+
+    return 0;
+}
+
+
+"""
+EXPLANATION OF THE CODE
+
+The program begins by seeding the random number generator for placing treasures and obstacles randomly on a grid.
+It initializes a 5x5 grid represented by a 2D vector, where '.' denotes empty cells, 'T' denotes treasures, and 'X' denotes obstacles.
+Treasures and obstacles are placed randomly on the grid.
+The grid is then printed with explanations of the symbols.
+Using count_if and find, the program calculates and displays the number of treasures present on the grid.
+"""
+
+
+"""
+NOTIONS COVERED
+
+find
+count_if
+printGrid
+"""
