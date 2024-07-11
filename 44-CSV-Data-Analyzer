@@ -1,0 +1,99 @@
+// CSV Data Analyzer: This program reads a CSV file and computes basic statistics.
+// Written to demonstrate the use of STL utilities and functional library in C++.
+
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <string>
+#include <sstream>
+#include <algorithm>
+#include <numeric>
+#include <map>
+
+// Function to split a line into tokens using delimiter
+std::vector<std::string> split(const std::string &line, char delimiter) {
+    std::vector<std::string> tokens;
+    std::string token;
+    std::istringstream tokenStream(line);
+    while (std::getline(tokenStream, token, delimiter)) {
+        tokens.push_back(token);
+    }
+    return tokens;
+}
+
+// Function to read CSV file and return a 2D vector of data
+std::vector<std::vector<std::string>> readCSV(const std::string &filename) {
+    std::vector<std::vector<std::string>> data;
+    std::ifstream file(filename);
+    std::string line;
+    while (std::getline(file, line)) {
+        data.push_back(split(line, ','));
+    }
+    return data;
+}
+
+// Function to compute the average of a column of numerical data
+double computeAverage(const std::vector<std::vector<std::string>> &data, int columnIndex) {
+    std::vector<double> columnData;
+    for (size_t i = 1; i < data.size(); ++i) {
+        columnData.push_back(std::stod(data[i][columnIndex]));
+    }
+    double sum = std::accumulate(columnData.begin(), columnData.end(), 0.0);
+    return sum / columnData.size();
+}
+
+// Function to find the minimum and maximum of a column of numerical data
+std::pair<double, double> findMinMax(const std::vector<std::vector<std::string>> &data, int columnIndex) {
+    std::vector<double> columnData;
+    for (size_t i = 1; i < data.size(); ++i) {
+        columnData.push_back(std::stod(data[i][columnIndex]));
+    }
+    auto minMaxPair = std::minmax_element(columnData.begin(), columnData.end());
+    return { *minMaxPair.first, *minMaxPair.second };
+}
+
+int main() {
+    // Read the CSV file into a 2D vector
+    std::string filename = "data.csv";
+    std::vector<std::vector<std::string>> data = readCSV(filename);
+
+    // Check if the data has been read successfully
+    if (data.empty()) {
+        std::cerr << "Error reading CSV file." << std::endl;
+        return 1;
+    }
+
+    // Assume we are interested in the second column (index 1) for statistics
+    int columnIndex = 1;
+
+    // Compute and print the average of the column
+    double average = computeAverage(data, columnIndex);
+    std::cout << "Average: " << average << std::endl;
+
+    // Find and print the minimum and maximum of the column
+    auto [minValue, maxValue] = findMinMax(data, columnIndex);
+    std::cout << "Minimum: " << minValue << std::endl;
+    std::cout << "Maximum: " << maxValue << std::endl;
+
+    return 0;
+}
+
+
+"""
+EXPLANATION OF THE CODE
+
+This program reads a CSV file and computes basic statistics (average, minimum, and maximum) for a specified column of numerical data.
+The split function splits a line into tokens based on a delimiter.
+The readCSV function reads the entire CSV file into a 2D vector.
+The computeAverage function calculates the average of a specified column of numerical data.
+The findMinMax function finds the minimum and maximum values of a specified column of numerical data.
+The main function reads the CSV file, computes statistics for a specified column, and prints the results.
+"""
+
+
+"""
+NOTIONS COVERED
+
+STL utilities: std::vector, std::string, std::ifstream, std::istringstream, std::getline, std::accumulate
+Functional library: std::stod, std::minmax_element, std::pair
+"""
