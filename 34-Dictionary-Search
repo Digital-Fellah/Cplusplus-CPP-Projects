@@ -1,0 +1,67 @@
+// Dictionary Search: A program to find words in a dictionary using STL operations
+// Notions: lower_bound, upper_bound, equal_range, binary_search
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+
+// Function to print the range of words starting with a given prefix
+void printRange(const std::vector<std::string>& dictionary, const std::string& prefix) {
+    auto range = std::equal_range(dictionary.begin(), dictionary.end(), prefix, 
+                                  [&prefix](const std::string& a, const std::string& b) {
+                                      return a.compare(0, prefix.size(), b, 0, prefix.size()) < 0;
+                                  });
+
+    std::cout << "Words starting with \"" << prefix << "\":" << std::endl;
+    for (auto it = range.first; it != range.second; ++it) {
+        std::cout << *it << std::endl;
+    }
+}
+
+// Function to check if a word exists in the dictionary
+bool checkWordExists(const std::vector<std::string>& dictionary, const std::string& word) {
+    return std::binary_search(dictionary.begin(), dictionary.end(), word);
+}
+
+int main() {
+    // Initialize a sample dictionary
+    std::vector<std::string> dictionary = {"apple", "banana", "blueberry", "cherry", "date", "fig", "grape"};
+
+    // Sort the dictionary to ensure proper operation of binary search and equal range functions
+    std::sort(dictionary.begin(), dictionary.end());
+
+    // Prefix to search for
+    std::string prefix = "bl";
+    printRange(dictionary, prefix);  // Print all words starting with the given prefix
+
+    // Word to check for existence in the dictionary
+    std::string word = "apple";
+    if (checkWordExists(dictionary, word)) {
+        std::cout << "\"" << word << "\" exists in the dictionary." << std::endl;
+    } else {
+        std::cout << "\"" << word << "\" does not exist in the dictionary." << std::endl;
+    }
+
+    return 0;
+}
+
+
+"""
+EXPLANATION OF THE CODE
+
+Initialize a sample dictionary: Create a vector of strings representing the dictionary.
+Sort the dictionary: Ensure the dictionary is sorted to properly use binary search and equal range functions.
+Print range of words starting with a prefix: Use equal_range to find and print all words starting with the given prefix.
+Check if a word exists in the dictionary: Use binary_search to check if a specific word exists in the dictionary.
+"""
+
+
+"""
+NOTIONS COVERED
+
+lower_bound: Utilized indirectly through equal_range.
+upper_bound: Utilized indirectly through equal_range.
+equal_range: Used to find the range of words starting with a given prefix.
+binary_search: Used to check if a specific word exists in the dictionary.
+"""
