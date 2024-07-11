@@ -1,0 +1,73 @@
+// File Search Utility
+// This program searches for a specific sequence of characters in text files.
+
+#include <iostream>
+#include <fstream>  // For file handling
+#include <string>   // For string operations
+#include <algorithm>  // For STL algorithms
+
+using namespace std;
+
+int main() {
+    // Step 1: Declare variables
+    string filename;
+    string searchSequence;
+    int lineNumber = 0;
+
+    // Step 2: Get user input for filename and search sequence
+    cout << "Enter filename: ";
+    getline(cin, filename);
+
+    cout << "Enter search sequence: ";
+    getline(cin, searchSequence);
+
+    // Step 3: Open the file
+    ifstream file(filename);
+
+    // Step 4: Check if file opened successfully
+    if (!file.is_open()) {
+        cout << "Unable to open file!" << endl;
+        return 1;
+    }
+
+    // Step 5: Read file line by line
+    string line;
+    while (getline(file, line)) {
+        lineNumber++;
+
+        // Step 6: Search for the sequence in the current line
+        auto it = search(line.begin(), line.end(), searchSequence.begin(), searchSequence.end());
+
+        // Step 7: Check if sequence is found in the current line
+        if (it != line.end()) {
+            cout << "Sequence found at line " << lineNumber << ": " << line << endl;
+        }
+    }
+
+    // Step 8: Close the file
+    file.close();
+
+    return 0;
+}
+
+
+"""
+EXPLANATION OF THE CODE
+
+Declare necessary variables for filename, search sequence, and line number.
+Prompt the user to input the filename and the sequence they want to search for.
+Open the specified file for reading.
+Check if the file opened successfully; if not, display an error message and exit.
+Read the file line by line.
+Use the search algorithm to find the specified sequence within each line of the file.
+Output the line number and content whenever the sequence is found.
+Close the file after finishing reading.
+"""
+
+
+"""
+NOTIONS COVERED
+
+search: Used to find a sequence within a container (in this case, each line of the file).
+search_n: Not directly used in this simplified example, but typically used to find multiple occurrences of a sequence in a sequence.
+"""
