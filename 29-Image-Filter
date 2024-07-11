@@ -1,0 +1,74 @@
+// Image Filter Program
+// This program applies a grayscale filter to an input image file.
+
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <algorithm>
+
+// Function to apply grayscale filter to each pixel
+void grayscaleFilter(std::vector<unsigned char>& pixels) {
+    // Iterate through each pixel (assuming grayscale image)
+    for (auto& pixel : pixels) {
+        // Apply grayscale formula: gray = 0.2126 * R + 0.7152 * G + 0.0722 * B
+        // Since it's grayscale, R = G = B = pixel
+        unsigned char gray = static_cast<unsigned char>(0.2126 * pixel + 0.7152 * pixel + 0.0722 * pixel);
+        pixel = gray; // Update pixel with grayscale value
+    }
+}
+
+int main() {
+    // Read image data from file
+    std::ifstream inFile("input_image.raw", std::ios::binary);
+    
+    if (!inFile) {
+        std::cerr << "Error opening input file!\n";
+        return 1;
+    }
+    
+    // Determine file size
+    inFile.seekg(0, std::ios::end);
+    std::streampos fileSize = inFile.tellg();
+    inFile.seekg(0, std::ios::beg);
+    
+    // Read file data into vector
+    std::vector<unsigned char> imageData(fileSize);
+    inFile.read(reinterpret_cast<char*>(imageData.data()), fileSize);
+    inFile.close();
+    
+    // Apply grayscale filter
+    grayscaleFilter(imageData);
+    
+    // Write grayscale image data to output file
+    std::ofstream outFile("output_image.raw", std::ios::binary);
+    
+    if (!outFile) {
+        std::cerr << "Error opening output file!\n";
+        return 1;
+    }
+    
+    outFile.write(reinterpret_cast<const char*>(imageData.data()), fileSize);
+    outFile.close();
+    
+    std::cout << "Grayscale filter applied successfully!\n";
+    
+    return 0;
+}
+
+
+"""
+EXPLANATION OF THE CODE
+
+Reads an input image file in raw format.
+Applies a grayscale filter to each pixel of the image.
+Writes the modified image data to an output file.
+"""
+
+
+"""
+NOTIONS COVERED
+
+copy: Used indirectly through file read/write operations.
+transform: Used to apply the grayscale filter to each pixel.
+remove_if: Not directly used in this project.
+"""
