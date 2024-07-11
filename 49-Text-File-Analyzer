@@ -1,0 +1,81 @@
+// Project 49: Text File Analyzer
+// This program analyzes a text file to count words, characters, and lines.
+
+#include <iostream>
+#include <fstream> // Required for file handling
+#include <string>  // Required for string operations
+
+using namespace std;
+
+int main() {
+    string filename;
+    ifstream inputFile;
+    string line;
+    int wordCount = 0;
+    int charCount = 0;
+    int lineCount = 0;
+
+    // Prompt user for the filename
+    cout << "Enter the name of the text file to analyze: ";
+    cin >> filename;
+
+    // Open the file
+    inputFile.open(filename);
+
+    // Check if file opening was successful
+    if (!inputFile) {
+        cerr << "Error opening file." << endl;
+        return 1;
+    }
+
+    // Read the file line by line
+    while (getline(inputFile, line)) {
+        lineCount++; // Increment line count for each line read
+
+        // Loop through each character in the line
+        for (char c : line) {
+            if (c != ' ') {
+                charCount++; // Increment character count for each non-space character
+            }
+        }
+
+        // Use a stringstream to extract words from the line
+        stringstream ss(line);
+        string word;
+        while (ss >> word) {
+            wordCount++; // Increment word count for each word extracted
+        }
+    }
+
+    // Close the file
+    inputFile.close();
+
+    // Output the results
+    cout << "Analysis complete." << endl;
+    cout << "Total lines: " << lineCount << endl;
+    cout << "Total words: " << wordCount << endl;
+    cout << "Total characters: " << charCount << endl;
+
+    return 0;
+}
+
+
+"""
+EXPLANATION OF THE CODE
+
+The program starts by prompting the user to enter the filename of the text file they want to analyze.
+It opens the specified file and checks if the file opening was successful.
+It reads the file line by line using getline() and counts the number of lines.
+For each line, it counts the number of characters excluding spaces and updates the total character count.
+It uses a stringstream to extract words from each line and counts the number of words.
+After processing all lines in the file, it closes the file and prints out the total lines, words, and characters analyzed.
+"""
+
+
+"""
+NOTIONS COVERED
+
+File I/O: Opening, reading, and closing a text file.
+Strings I/O: Manipulating strings to count words and characters.
+Formatting: Outputting results in a formatted manner.
+"""
