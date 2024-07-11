@@ -1,0 +1,64 @@
+// Movie Recommendation System
+// This program recommends movies to users based on their preferences.
+
+#include <iostream>
+#include <set>
+#include <string>
+
+using namespace std;
+
+// Function to recommend movies based on user preferences
+set<string> recommendMovies(const set<string>& userPreferences, const set<string>& otherUserPreferences) {
+    set<string> recommendedMovies;
+
+    // Find intersection of userPreferences and otherUserPreferences
+    for (const string& movie : userPreferences) {
+        if (otherUserPreferences.count(movie) > 0) {
+            recommendedMovies.insert(movie);
+        }
+    }
+
+    return recommendedMovies;
+}
+
+int main() {
+    // User 1 preferences
+    set<string> user1Preferences = {"The Matrix", "Inception", "Interstellar", "The Dark Knight"};
+
+    // User 2 preferences
+    set<string> user2Preferences = {"Inception", "The Dark Knight", "Fight Club", "Pulp Fiction"};
+
+    // Recommend movies for user 1 based on user 2's preferences
+    set<string> recommendedMovies = recommendMovies(user1Preferences, user2Preferences);
+
+    // Display recommended movies
+    cout << "Recommended movies for User 1 based on User 2's preferences:" << endl;
+    for (const string& movie : recommendedMovies) {
+        cout << "- " << movie << endl;
+    }
+
+    return 0;
+}
+
+
+"""
+EXPLANATION OF THE CODE
+
+The program starts by defining a recommendMovies function that takes two sets (userPreferences and otherUserPreferences) as input and returns a set of recommended movies.
+Inside the recommendMovies function, it initializes an empty set recommendedMovies to store the recommended movies.
+It iterates through each movie in userPreferences and checks if the movie is also present in otherUserPreferences using the count method.
+If a movie is found in both sets, it adds the movie to the recommendedMovies set.
+In the main function, two sets (user1Preferences and user2Preferences) are defined to represent the movie preferences of two users.
+The recommendMovies function is called with user1Preferences and user2Preferences to obtain a set of recommended movies for User 1 based on User 2's preferences.
+Finally, the recommended movies are displayed on the console.
+"""
+
+
+"""
+NOTIONS COVERED
+
+STL Associative containers (set)
+Behavior and API of set
+Putting objects into set
+Usage scenarios
+"""
